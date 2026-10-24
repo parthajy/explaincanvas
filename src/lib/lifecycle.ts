@@ -23,6 +23,8 @@ import { landerFor, chapterQuestions } from "@/lib/marketing";
  */
 
 export const WINBACK_CREDITS = 50;
+/** Never-paid accounts get a smaller gift, once: promo credits buy fresh generations, which cost real money. */
+export const WINBACK_CREDITS_FREE = 16;
 const WINBACK_CLAIM_DAYS = 14;
 const WINBACK_GRANT_DAYS = 30;
 
@@ -204,11 +206,13 @@ export async function sendLifecycleEmail(job: EmailJob): Promise<unknown> {
   // winback
   if (!(await claimLog(a.id, "winback", key))) return { skipped: "already sent" };
   const token = nanoid(16);
+  const hasPaid = Boolean(await maybe<{ ok: number }>(`select 1 ok from payments where account_id = $1 and status = 'paid' limit 1`, [a.id]));
+  const credits = hasPaid ? WINBACK_CREDITS : WINBACK_CREDITS_FREE;
   const claim = await one<{ token: string }>(
     `insert into credit_claims(account_id, token, credits, kind, expires_at) values ($1,$2,$3,'winback', now() + ($4 || ' days')::interval) returning token`,
-    [a.id, token, WINBACK_CREDITS, String(WINBACK_CLAIM_DAYS)],
+    [a.id, token, credits, String(WINBACK_CLAIM_DAYS)],
   );
-  return deliver(a.id, key, a.email, T.winback({ appUrl, name: a.full_name, credits: WINBACK_CREDITS, claimUrl: `${appUrl}/claim/${claim.token}`, expiresInDays: WINBACK_CLAIM_DAYS, unsubscribeUrl }));
+  return deliver(a.id, key, a.email, T.winback({ appUrl, name: a.full_name, credits, claimUrl: `${appUrl}/claim/${claim.token}`, expiresInDays: WINBACK_CLAIM_DAYS, unsubscribeUrl }));
 }
 
 /** Redeems a claim link for the signed-in owner. Idempotent: a second visit reports already claimed. */
@@ -267,7 +271,7 @@ export async function lifecycleSweep(): Promise<Record<string, number>> {
       where a.last_active < now() - interval '10 days'
         and coalesce(s.marketing_email, true)
         and not exists (select 1 from email_log l where l.account_id = a.id and l.kind = 'winback' and l.created_at > now() - interval '30 days')
-        and (select count(*) from email_log l where l.account_id = a.id and l.kind = 'winback') < 2`,
+        and (select count(*) from email_log l where l.account_id = a.id and l.kind = 'winback') < case when exists (select 1 from payments p where p.account_id = a.id and p.status = 'paid') then 2 else 1 end`,
   );
   for (const r of quiet) await put({ kind: "winback", userId: r.id });
 

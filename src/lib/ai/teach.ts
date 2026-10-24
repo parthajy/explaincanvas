@@ -59,6 +59,8 @@ export interface TeachInput {
   ncertIndex?: string;
   /** Parsed from the question: "Ex 4.2 Q3". */
   ncertHint?: { chapter: number | null; ref: string | null };
+  /** Free accounts use the cheaper teaching model. */
+  tier?: "free" | "paid";
 }
 
 export class SceneBuildError extends Error {
@@ -172,12 +174,12 @@ export async function teach(input: TeachInput): Promise<{ doc: SceneDocT; usage:
 
     const { data, usage } = await structuredCall({
       stage: attempt === 0 ? "teach" : "teach-retry",
-      model: e.TEACHING_MODEL,
+      model: attempt === 0 ? (input.tier === "free" ? e.TEACHING_MODEL_FREE : e.TEACHING_MODEL) : e.TEACHING_RETRY_MODEL,
       system: TEACHING_SYSTEM,
       messages: [{ role: "user", content }],
       schema: TeachOutput,
       maxTokens: 24_000,
-      effort: "high",
+      effort: attempt === 0 ? e.TEACHING_EFFORT : "high",
     });
     usages.push(usage);
 

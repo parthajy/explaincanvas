@@ -37,8 +37,12 @@ const ServerEnv = z.object({
 
   /** Optional: the SDK also resolves `ant auth login` profiles when unset. */
   ANTHROPIC_API_KEY: z.string().min(10).optional(),
+  /** Paid plans teach on Opus (measured: medium effort failed verification where high passes, and a retry costs more than it saves). Free accounts teach on Haiku at about 1/15th the cost; the Sonnet verifier and an Opus revision pass keep the floor on quality. */
   TEACHING_MODEL: z.string().default("claude-opus-5-5"),
-  VERIFY_MODEL: z.string().default("claude-opus-5-5"),
+  TEACHING_MODEL_FREE: z.string().default("claude-haiku-5-5"),
+  TEACHING_RETRY_MODEL: z.string().default("claude-opus-5-5"),
+  TEACHING_EFFORT: z.enum(["low", "medium", "high"]).default("high"),
+  VERIFY_MODEL: z.string().default("claude-sonnet-5-5"),
   ROUTER_MODEL: z.string().default("claude-haiku-5-5"),
   FOLLOWUP_MODEL: z.string().default("claude-haiku-5-5"),
   FOLLOWUP_ESCALATION_MODEL: z.string().default("claude-sonnet-5-5"),
@@ -68,6 +72,16 @@ const ServerEnv = z.object({
   IMAGE_MODEL: z.string().default("imagen-4.0-generate-001"),
   VIDEO_MODEL: z.string().default("veo-3.1-lite-generate-preview"),
   VIDEO_MODEL_FAST: z.string().default("veo-3.1-fast-generate-preview"),
+  /** Hard ceiling on provider spend per calendar month (IST). 0 disables the guard. */
+  MONTHLY_BUDGET_INR: z.coerce.number().min(0).default(25_000),
+  /** Fraction of the budget at which free accounts lose fresh generations (library stays open). */
+  BUDGET_FREE_PAUSE_AT: z.coerce.number().min(0).max(2).default(0.7),
+  /** Fraction at which every fresh generation pauses until the month turns. */
+  BUDGET_HARD_PAUSE_AT: z.coerce.number().min(0).max(3).default(1.05),
+  /** Non-model unit prices in paise so narration, images and video count against the budget. */
+  COST_TTS_PAISE_PER_1K_CHARS: z.coerce.number().min(0).default(900),
+  COST_IMAGE_PAISE: z.coerce.number().min(0).default(30),
+  COST_VIDEO_PAISE_PER_SECOND: z.coerce.number().min(0).default(3_000),
   /** Hour of day (IST, 0-23) when the daily parent report goes out. */
   PARENT_REPORT_HOUR_IST: z.coerce.number().int().min(0).max(23).default(20),
 

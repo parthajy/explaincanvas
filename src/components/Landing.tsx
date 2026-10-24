@@ -75,32 +75,39 @@ export function Landing() {
         </Link>
       </header>
 
-      <section className="mx-auto max-w-6xl px-6 pt-16 md:pt-28">
-        <span className="inline-block rounded-full border px-3 py-1 text-[12px] tracking-wide" style={{ borderColor: dark.line, color: dark.muted }}>
-          Any subject · Any level · School to research
-        </span>
-        <h1 className="mt-8 max-w-4xl text-[44px] font-semibold leading-[1.02] tracking-[-0.03em] md:text-[84px]">
-          Type anything you are stuck on. <span style={{ color: dark.muted }}>Understand it visually.</span>
-        </h1>
-        <p className="mt-8 max-w-xl text-[17px] leading-relaxed" style={{ color: dark.muted }}>
-          A diagram, a set of steps, an animation or a 3D model, whichever teaches it best. Made for the question, checked for accuracy, then one question to prove it clicked.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-3">
-          <Link href="/login" className="rounded-full px-6 py-3 text-[15px] font-medium" style={{ background: dark.text, color: dark.bg }}>
-            Start free. First diagram on us
-          </Link>
-          <Link href="/library" className="rounded-full border px-6 py-3 text-[15px] font-medium hover:bg-white/5" style={{ borderColor: dark.line }}>
-            Browse free lessons
-          </Link>
+      <section className="mx-auto max-w-6xl px-6 pt-12 md:pt-20">
+        <div className="grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-12">
+          <div>
+            <span className="inline-block rounded-full border px-3 py-1 text-[12px] tracking-wide" style={{ borderColor: dark.line, color: dark.muted }}>
+              Any subject · Any level · School to research
+            </span>
+            <h1 className="mt-7 text-[42px] font-semibold leading-[1.02] tracking-[-0.03em] md:text-[64px] lg:text-[72px]">
+              Type anything you are stuck on. <span style={{ color: dark.muted }}>Understand it visually.</span>
+            </h1>
+            <p className="mt-7 max-w-xl text-[17px] leading-relaxed" style={{ color: dark.muted }}>
+              A diagram, a set of steps, an animation or a 3D model, whichever teaches it best. Made for the question, checked for accuracy, then one question to prove it clicked.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <Link href="/login" className="rounded-full px-6 py-3 text-[15px] font-medium" style={{ background: dark.text, color: dark.bg }}>
+                Start free. First diagram on us
+              </Link>
+              <Link href="/library" className="rounded-full border px-6 py-3 text-[15px] font-medium hover:bg-white/5" style={{ borderColor: dark.line }}>
+                Browse free lessons
+              </Link>
+            </div>
+            <p className="mt-4 text-[12px]" style={{ color: dark.faint }}>
+              Sign in with Google. No card. Plans from {formatInr(PLANS.student.pricePaise)} a month.
+            </p>
+          </div>
+          <Reveal delay={120}>
+            <LineShow />
+          </Reveal>
         </div>
-        <p className="mt-4 text-[12px]" style={{ color: dark.faint }}>
-          Sign in with Google. No card. Plans from {formatInr(PLANS.student.pricePaise)} a month.
-        </p>
 
-        {/* Live-looking composer and a diagram that draws itself */}
-        <div className="mt-16 grid items-center gap-8 md:grid-cols-[1.1fr_1fr]">
+        {/* Live-looking composer */}
+        <div className="mt-14">
           <Reveal>
-            <div className="rounded-[28px] border p-2" style={{ borderColor: dark.line, background: dark.panel }}>
+            <div className="mx-auto max-w-3xl rounded-[28px] border p-2" style={{ borderColor: dark.line, background: dark.panel }}>
               <div className="flex items-center gap-3 rounded-[22px] px-4 py-3" style={{ background: dark.bg, border: `1px solid ${dark.line}` }}>
                 <span className="text-[20px]" style={{ color: dark.muted }}>
                   +
@@ -109,10 +116,10 @@ export function Landing() {
                   <TypingLine
                     items={[
                       "Why don't action and reaction forces cancel out?",
-                      "How does a plant make its food? I'm in class 7.",
+                      "Give me an intuition for the Fourier transform.",
                       "Show me the parts of the heart in 3D.",
                       "Explain Ohm's law with a circuit.",
-                      "How do the Moon's phases change over a month?",
+                      "Why does gradient descent overshoot?",
                     ]}
                   />
                 </div>
@@ -125,9 +132,6 @@ export function Landing() {
                 <span>Reading your question → Writing → Checking → Drawing</span>
               </div>
             </div>
-          </Reveal>
-          <Reveal delay={150}>
-            <LineShow />
           </Reveal>
         </div>
       </section>

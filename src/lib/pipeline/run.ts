@@ -9,6 +9,7 @@ import { answerFollowup } from "@/lib/ai/followup";
 import { readPage, textIsThin, pickNamed } from "@/lib/ai/pagereader";
 import { parseNcertRef, chapterIndexText, findChapter } from "@/lib/ncert";
 import { recordSafetyEvent, SAFE_REPLY } from "@/lib/safety";
+import { budgetState } from "@/lib/budget";
 import { RefusalError, ModelOutputError, type ModelUsage } from "@/lib/ai/client";
 import { Format, SceneDoc, parseSceneDoc, type SceneDoc as SceneDocT } from "@/lib/scene/schema";
 import { CREDIT_COST, allowedBucketsFor, FREE_TIER } from "@/lib/billing/plans";
@@ -39,6 +40,8 @@ export class PipelineError extends Error {
 const FRIENDLY: Record<string, string> = {
   insufficient_credits: "You're out of credits for this. Add a top-up or upgrade your plan and send it again.",
   insufficient_credits_free: "The free plan includes one fresh diagram, and it has been used. Choose a plan to keep asking, or browse the free library.",
+  budget_free_paused: "Free explanations are paused for the rest of this month while we keep costs in check. The library is open, and plans are not affected.",
+  budget_paused: "New explanations are paused for the rest of this month. The library is open, follow-ups still work, and nothing was charged.",
   verification_failed: "I couldn't produce an explanation I'm confident is correct. Try rephrasing, or ask about a smaller part of the topic.",
   refused: "I can't help with that one. Ask me anything from your school subjects.",
   model_error: "Something went wrong while building this explanation. Please try again in a moment.",
@@ -245,7 +248,10 @@ export async function runExplanation(explanationId: string, opts: { isLastAttemp
       }
     }
 
-    // Fresh generation.
+    // Fresh generation, if this month's spend allows it.
+    const budget = await budgetState();
+    if (budget.allPaused) throw new PipelineError("budget_paused", `monthly budget exhausted (${budget.spentPaise} of ${budget.budgetPaise})`, false);
+    if (budget.freePaused && isFree) throw new PipelineError("budget_free_paused", `free generations paused at ${Math.round(budget.fraction * 100)}% of budget`, false);
     const quoted = CREDIT_COST[format];
     await explanations.patch(explanationId, { credits_quoted: quoted, language });
     await reserveOrFail({ amount: quoted, refType: "explanation", kind: format });
@@ -263,7 +269,7 @@ export async function runExplanation(explanationId: string, opts: { isLastAttemp
     const ncertChapterName = findChapter(decision.classLevel, decision.subject, ncertChapterNo)?.name ?? null;
     const ncertIndex = ncertChapterNo ? `Chapter ${ncertChapterNo}, ${ncertChapterName}` : "";
     const ncert = { chapter: ncertChapterNo, chapterName: ncertChapterName, ref: ncertHint.ref };
-    const first = await teach({ question: questionText, format, concept: conceptInput, imageBase64: image, revisionNotes, language, ncertIndex, ncertHint });
+    const first = await teach({ question: questionText, format, concept: conceptInput, imageBase64: image, revisionNotes, language, ncertIndex, ncertHint, tier: isFree ? "free" : "paid" });
     let doc: SceneDocT = { ...first.doc, language, concept: { ...first.doc.concept, ncert } };
     usages.push(...first.usage);
 
@@ -274,7 +280,7 @@ export async function runExplanation(explanationId: string, opts: { isLastAttemp
     if (review.verdict === "fail") {
       log.warn({ issues: review.issues }, "verification failed, revising once");
       const notes = review.issues.map((i) => `scene ${i.sceneIndex}: ${i.description}. Fix: ${i.fix}`);
-      const second = await teach({ question: questionText, format, concept: conceptInput, imageBase64: image, revisionNotes: [...revisionNotes, ...notes], language, ncertIndex, ncertHint });
+      const second = await teach({ question: questionText, format, concept: conceptInput, imageBase64: image, revisionNotes: [...revisionNotes, ...notes], language, ncertIndex, ncertHint, tier: isFree ? "free" : "paid" });
       doc = { ...second.doc, language, concept: { ...second.doc.concept, ncert } };
       usages.push(...second.usage);
       const again = await verify(doc, questionText, language);
@@ -288,7 +294,7 @@ export async function runExplanation(explanationId: string, opts: { isLastAttemp
     await setStatus("rendering");
     // Diagram SVG is already sanitised; steps, slides and 3D render client-side. Narration audio,
     // illustrations and video clips attach here when their providers are configured.
-    const rendered = await renderAssets(doc, { explanationId, fastVideo: plan.fastVideo, premiumNarration: plan.premiumNarration });
+    const rendered = await renderAssets(doc, { explanationId, accountId: ex.account_id, fastVideo: plan.fastVideo, premiumNarration: plan.premiumNarration, narration: !isFree });
     if (rendered.report.errors.length) log.warn({ errors: rendered.report.errors }, "asset rendering had failures");
 
     const finalDoc = parseSceneDoc(rendered.doc);

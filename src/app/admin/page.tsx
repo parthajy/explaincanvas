@@ -3,6 +3,7 @@ import { redirect, notFound } from "next/navigation";
 import { getSessionUser } from "@/lib/auth/session";
 import { isAdminEmail } from "@/lib/admin";
 import { admin } from "@/lib/repo";
+import { budgetState } from "@/lib/budget";
 import { formatInr } from "@/lib/billing/plans";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -49,7 +50,7 @@ export default async function AdminPage() {
   if (!user) redirect("/login?next=/admin");
   if (!isAdminEmail(user.email)) notFound();
 
-  const [o, daily, recent, failures, openReports, dead, userRows, emails, [claims], safety, [safetyCounts]] = await Promise.all([admin.overview(), admin.daily(), admin.recentExplanations(), admin.failures(), admin.openReports(), admin.deadJobs(), admin.users(), admin.emails(), admin.claims(), admin.safety(), admin.safetyCounts()]);
+  const [o, daily, recent, failures, openReports, dead, userRows, emails, [claims], safety, [safetyCounts], budget] = await Promise.all([admin.overview(), admin.daily(), admin.recentExplanations(), admin.failures(), admin.openReports(), admin.deadJobs(), admin.users(), admin.emails(), admin.claims(), admin.safety(), admin.safetyCounts(), budgetState(true)]);
   const ready30 = n(o.cache.generated) + n(o.cache.library);
   const grid = "grid gap-px overflow-hidden rounded-3xl border border-border bg-border";
 
@@ -69,6 +70,12 @@ export default async function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-7xl space-y-8 px-6 pb-24">
+        <section className={`${grid} sm:grid-cols-3`}>
+          <Stat label="Spend this month" value={inr(budget.spentPaise)} sub={budget.budgetPaise ? `${Math.round(budget.fraction * 100)}% of the ${inr(budget.budgetPaise)} ceiling · model calls, narration, images, video` : "no ceiling set"} />
+          <Stat label="Projected month end" value={inr(budget.projectedPaise)} sub={budget.projectedPaise > budget.budgetPaise && budget.budgetPaise ? "on course to hit the ceiling" : "within budget at this pace"} />
+          <Stat label="Generation status" value={budget.allPaused ? "Paused for all" : budget.freePaused ? "Paused for free" : "Open"} sub={budget.allPaused ? "resumes on the 1st" : budget.freePaused ? "paid plans continue · free accounts get the library" : `free pauses at ${Math.round((budget.budgetPaise * 0.7) / 100).toLocaleString("en-IN")} INR, all at 105%`} />
+        </section>
+
         <section className={`${grid} sm:grid-cols-2 lg:grid-cols-4`}>
           <Stat label="Users" value={o.users.total} sub={`+${o.users.d1} today · +${o.users.d7} this week`} />
           <Stat label="Explanations, 30 days" value={o.explanations.d30} sub={`${o.explanations.d1} today · ${o.explanations.inflight} in flight now`} />

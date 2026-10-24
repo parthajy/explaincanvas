@@ -177,3 +177,9 @@ Monthly Dodo plans are granted only by renewals; the hourly billing job grants m
 - **Safety.** `src/lib/safety.ts`: local profanity screen (English and Hinglish spellings, leetspeak and spacing tricks) on chat text, student names and chat titles; router `unsafe` intent and page-reader `unsafe` flag; age-appropriate rules in the teaching prompts; every event in `safety_events` (admin shows counts, log and per-user flags); five events in 24 hours pauses questions for a day.
 - **Generation feed.** `GenerationFeed.tsx` shows stage, rotating detail lines, elapsed time and an estimate while an explanation is made.
 - **Schema size.** Anthropic rejects structured-output grammars above a size limit. The teach schema is at that limit: do not add fields to `TeachOutput`; put new small outputs on the router or verify schemas (follow-ups live on verify for this reason).
+
+## Spend ceiling
+
+`MONTHLY_BUDGET_INR` (default 25,000) caps provider spend per calendar month in IST. `src/lib/budget.ts` sums `usage_events`, which now includes narration, images and video at the unit prices in `COST_*` env vars, not just model calls. At 70% of the ceiling free accounts lose fresh generations (library, follow-ups and photos still work); at 105% every fresh generation pauses until the 1st. Paid plans keep going in between because they earn more than they cost. The admin dashboard shows spend, the month-end projection and the current status.
+
+Cost levers already applied: teaching and verification run on Sonnet 5.5 (`TEACHING_MODEL`, `VERIFY_MODEL`), Opus only on the revision pass (`TEACHING_RETRY_MODEL`); free accounts get no narration; the win-back gift is 16 credits once for never-paid accounts and 50 for past payers.
