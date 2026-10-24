@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/Logo";
 import { PLANS, formatInr } from "@/lib/billing/plans";
-import { Reveal, TypingLine, TimeBars, DrawnDiagram } from "@/components/Motion";
+import { Reveal, TypingLine, TimeBars } from "@/components/Motion";
+import { LineShow } from "@/components/LineShow";
 
 /**
  * Landing: black and white, large type, quiet greys. Dark hero and footer, white middle.
@@ -126,7 +127,7 @@ export function Landing() {
             </div>
           </Reveal>
           <Reveal delay={150}>
-            <DrawnDiagram />
+            <LineShow />
           </Reveal>
         </div>
       </section>
