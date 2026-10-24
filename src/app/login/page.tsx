@@ -33,7 +33,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           </h1>
           <p className="mt-6 max-w-sm text-[15px] leading-relaxed text-[#8a8a8a]">A diagram, steps, an animation or a 3D model, made for the question and checked before you see it.</p>
         </div>
-        <p className="text-[12px] text-[#4a4a4a]">Classes 6 to 10 · CBSE · English</p>
+        <p className="text-[12px] text-[#4a4a4a]">Any subject · Any level · English or Hinglish</p>
       </div>
 
       <div className="flex items-center justify-center bg-bg p-8">

@@ -18,7 +18,7 @@ export const PageRead = z.object({
 });
 export type PageRead = z.infer<typeof PageRead>;
 
-const SYSTEM = `You read photos that Indian school students (Classes 6 to 10) take of textbook pages, worksheets and homework.
+const SYSTEM = `You read photos that learners take of textbook pages, worksheets, problem sets, lecture notes and homework, from school to university level.
 Return every distinct question or exercise item you can see, in reading order, with its label as printed ("Q3", "4.2 (ii)", "Example 7") and the full question text transcribed faithfully (keep numbers, units and symbols; write maths plainly, e.g. x^2, 3/4, sqrt(2)).
 If the photo is a single diagram, object or paragraph with no questions, set isQuestionPage false and return an empty list.
 If any part of the image is sexual, violent or otherwise unsuitable for a child, set unsafe true and return nothing else.

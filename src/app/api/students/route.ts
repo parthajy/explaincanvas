@@ -5,7 +5,7 @@ import { handle, requireUser, parseBody, HttpError } from "@/lib/chat/api";
 import { getPlanForAccount } from "@/lib/billing/subscription";
 import { students } from "@/lib/repo";
 
-const Body = z.object({ name: z.string().trim().min(1).max(60), classLevel: z.number().int().min(1).max(12) });
+const Body = z.object({ name: z.string().trim().min(1).max(60), classLevel: z.number().int().min(1).max(20) });
 
 export const POST = handle(async (req) => {
   const user = await requireUser();

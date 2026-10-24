@@ -6,6 +6,7 @@ import { slugify } from "@/lib/ai/router";
 import { Format, SCENE_VERSION, SceneDoc, Subject, type SceneDoc as SceneDocT } from "@/lib/scene/schema";
 import { sanitizeSvg, SvgRejectedError } from "@/lib/render/svg";
 import { env } from "@/lib/env";
+import { levelLabel } from "@/lib/levels";
 
 /**
  * The model writes against a deliberately loose schema (structured outputs support a JSON Schema
@@ -153,8 +154,8 @@ export async function teach(input: TeachInput): Promise<{ doc: SceneDocT; usage:
     const text = [
       hinglish ? "LANGUAGE: HINGLISH. This whole explanation must be written in Hinglish (see the Hinglish rule). English-only output is a failure." : "",
       `Format: ${input.format} (${formatLabel(input.format)}).`,
-      `Concept: ${input.concept.title} (key: ${input.concept.key}), subject ${input.concept.subject}, Class ${input.concept.classLevel}${input.concept.chapter ? `, chapter: ${input.concept.chapter}` : ""}.`,
-      input.ncertIndex ? `NCERT chapter for this concept: ${input.ncertIndex}. Follow that chapter's treatment, notation and definitions.` : "",
+      `Concept: ${input.concept.title} (key: ${input.concept.key}), subject ${input.concept.subject}, level ${input.concept.classLevel} (${levelLabel(input.concept.classLevel)})${input.concept.chapter ? `, chapter: ${input.concept.chapter}` : ""}.`,
+      input.ncertIndex ? `Textbook chapter for this concept: ${input.ncertIndex} (NCERT). Follow that chapter's treatment, notation and definitions.` : "",
       input.ncertHint?.ref || input.ncertHint?.chapter ? `The student referred to ${input.ncertHint.chapter ? `Chapter ${input.ncertHint.chapter}` : ""}${input.ncertHint.chapter && input.ncertHint.ref ? ", " : ""}${input.ncertHint.ref ?? ""}: treat that exercise question as the worked example and answer it fully.` : "",
       `Student's question:\n${input.question}`,
       hinglish ? "Reminder: narration, captions, steps, bullets, the check question, its options and its explanation are all in Hinglish. Example of the voice: \"Dekho, jab hum ball ko upar phenkte hain, gravity usko wapas neeche kheenchti hai. Yahi force hai weight.\"" : "",

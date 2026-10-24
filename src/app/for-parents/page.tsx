@@ -7,9 +7,9 @@ import { Hero, SectionTitle, Steps, FaqList, CtaBand, JsonLdScript } from "@/com
 
 export const metadata: Metadata = pageMetadata({
   title: "For parents: proof your child understood, every day",
-  description: "A daily email of what your child understood and what still needs work, from ₹599 a month. No tutor scheduling, no 30-minute videos, no guessing. CBSE Classes 6 to 10.",
+  description: "A daily email of what your child understood and what still needs work, from ₹599 a month. No tutor scheduling, no 30-minute videos, no guessing.",
   path: "/for-parents",
-  keywords: ["online tuition alternative", "CBSE doubt solving app", "parent report", "AI tutor for kids India", "BYJU'S alternative"],
+  keywords: ["online tuition alternative", "doubt solving app", "parent report", "AI tutor for kids India", "visual learning for children"],
 });
 
 const FAQ = [

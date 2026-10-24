@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({ title: "Refunds and cancellation", description: "Refunds and cancellation for ExplainCanvas, the visual AI learning tool for CBSE Classes 6 to 10.", path: "/legal/refunds" });
+export const metadata: Metadata = pageMetadata({ title: "Refunds and cancellation", description: "Refunds and cancellation for ExplainCanvas, the visual AI learning tool for any subject and level.", path: "/legal/refunds" });
 
 export default function RefundsPage() {
   return (

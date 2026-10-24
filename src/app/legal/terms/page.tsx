@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({ title: "Terms of service", description: "Terms of service for ExplainCanvas, the visual AI learning tool for CBSE Classes 6 to 10.", path: "/legal/terms" });
+export const metadata: Metadata = pageMetadata({ title: "Terms of service", description: "Terms of service for ExplainCanvas, the visual AI learning tool for any subject and level.", path: "/legal/terms" });
 
 export default function TermsPage() {
   return (

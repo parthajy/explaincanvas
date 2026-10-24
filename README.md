@@ -2,7 +2,7 @@
 
 Type anything you are stuck on. Understand it visually.
 
-Chat-first learning product for Indian school students (Classes 6 to 10, CBSE, English). The product thesis, pricing and plan live in [vision.md](./vision.md).
+Chat-first visual learning product for any academic subject at any level, from school to research (English and Hinglish). The product thesis, pricing and plan live in [vision.md](./vision.md).
 
 ## Stack
 

@@ -61,7 +61,7 @@ function lines(stage: Stage, format: string | null, concept: string | null): str
       return [...base, ...(byFormat[format ?? ""] ?? ["Building it from what a student of your class already knows.", "Defining every technical word the first time it appears."]), "Writing the narration.", "Writing one check question for the end."];
     }
     case "verifying":
-      return ["A second model is checking every fact, label and number.", "Comparing with the NCERT definition for your class.", "Checking the check question has one right answer.", "If anything is off, it is sent back once to be fixed."];
+      return ["A second model is checking every fact, label and number.", "Comparing with the standard textbook treatment for your level.", "Checking the check question has one right answer.", "If anything is off, it is sent back once to be fixed."];
     case "rendering":
       return format === "video" ? ["Generating the video clips. This is the slow part.", "Recording the narration.", "Stitching clips and narration together."] : format === "slides" || format === "steps" ? ["Generating a small illustration for each part.", "Recording the narration.", "Laying it out for your screen."] : ["Recording the narration.", "Preparing it for your screen."];
   }

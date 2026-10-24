@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { library } from "@/lib/repo";
 import { SiteHeader, SiteFooter, PageTitle } from "@/components/SiteShell";
+import { levelShort } from "@/lib/levels";
 import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Free visual lessons, Classes 6 to 10",
-  description: "Diagrams, steps, slides and 3D explanations for CBSE Maths and Science, checked for accuracy. Free to read.",
+  title: "Free visual lessons",
+  description: "Diagrams, steps, slides, animations and 3D explanations made for real questions, checked for accuracy, free to read. School to university.",
   path: "/library",
 });
 
@@ -25,12 +26,12 @@ export default async function LibraryPage({ searchParams }: { searchParams: Prom
   return (
     <div className="min-h-dvh bg-bg text-text">
       <SiteHeader />
-      <PageTitle eyebrow="Library" title="Free visual lessons." lede="Every lesson here was made for a student, checked for accuracy, and kept because it worked. Classes 6 to 10, CBSE." />
+      <PageTitle eyebrow="Library" title="Free visual lessons." lede="Every lesson here was made for a real question, checked for accuracy, and kept because it worked." />
 
       <div className="mx-auto mt-8 flex max-w-6xl flex-wrap gap-2 px-6">
-        {[6, 7, 8, 9, 10].map((c) => (
+        {[6, 7, 8, 9, 10, 11, 12, 13].map((c) => (
           <Link key={c} href={`/library?class=${c}${subject ? `&subject=${subject}` : ""}`} className={chip(classLevel === c)}>
-            Class {c}
+            {c >= 13 ? "University and beyond" : `Class ${c}`}
           </Link>
         ))}
         <span className="mx-1 self-center text-faint">·</span>
@@ -50,7 +51,7 @@ export default async function LibraryPage({ searchParams }: { searchParams: Prom
               <li key={l.id} className="bg-panel">
                 <Link href={`/library/${l.id}`} className="block h-full p-6 transition hover:bg-panel-2">
                   <div className="text-[12px] text-muted">
-                    Class {l.class_level} · <span className="capitalize">{l.subject}</span>{l.ncert_chapter ? ` · Ch ${l.ncert_chapter}` : ""} · {l.format.replace("_", " ")}
+                    {levelShort(l.class_level)} · <span className="capitalize">{l.subject}</span>{l.ncert_chapter ? ` · Ch ${l.ncert_chapter}` : ""} · {l.format.replace("_", " ")}
                   </div>
                   <div className="mt-2 text-[17px] font-medium leading-snug tracking-tight">{l.title}</div>
                   <div className="mt-1 text-[13px] text-faint">{l.concept_title}</div>

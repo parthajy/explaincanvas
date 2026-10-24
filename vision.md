@@ -16,7 +16,7 @@ Full business plan, model stack, unit economics and 18-month model: <https://cla
 
 - **English only.** No vernacular generation or interface.
 - **Chat first.** The chat is the only entry point. The visual player sits inside the chat. History in the left rail. Nothing else on the home screen.
-- **Classes 6 to 10, Maths and Science, CBSE first.** Curriculum metadata underneath, no separate school or teacher module.
+- **Any academic subject, any level.** School to PhD; the learner sets a level and every explanation is pitched there. School classes additionally get textbook chapter mapping and chapter guide pages for search traffic. (Changed 2026-10-24 from the original Classes 6 to 10 focus.)
 - **The router decides the format**, never the student. Correct and cheap beats cinematic.
 - **In v1:** diagram, photo annotation, numbered steps, narrated slides, animation, interactive 3D, generative video. **Not in v1:** live tutors, leaderboards, test series, other languages, school dashboards.
 - **60% gross margin per paid user is the floor.** Credits meter every output at roughly 1 credit per ₹1 of our cost; plans sell credits at ₹2.00 to ₹2.40.

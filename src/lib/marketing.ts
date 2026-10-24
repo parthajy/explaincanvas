@@ -1,8 +1,9 @@
 import { chaptersFor, type NcertChapter } from "@/lib/ncert";
 
 /**
- * Content for the marketing landers. Chapters come from the NCERT index so every lander and chapter page
- * uses the real textbook names; the questions here are the ones students actually type.
+ * Content for the school chapter guides. Chapters come from the textbook index so every guide and chapter page
+ * uses the real chapter names; the questions here are the ones students actually type. The product itself answers
+ * any academic question at any level; these pages exist because school chapters are how search traffic arrives.
  */
 
 export interface Lander {
@@ -13,15 +14,15 @@ export interface Lander {
   metaTitle: string;
   description: string;
   intro: string;
-  /** Example questions keyed by NCERT chapter number. Chapters without entries get generic prompts. */
+  /** Example questions keyed by textbook chapter number. Chapters without entries get generic prompts. */
   questions: Record<number, string[]>;
   faq: { q: string; a: string }[];
 }
 
 const COMMON_FAQ = (cls: number, subject: string): { q: string; a: string }[] => [
   {
-    q: `Does ExplainCanvas follow the CBSE Class ${cls} ${subject} syllabus?`,
-    a: `Yes. Every explanation is pitched at Class ${cls}, mapped to the NCERT chapter it belongs to, and follows the NCERT treatment of the topic. The student's class is set once on the account, so depth and vocabulary match what they see in school.`,
+    q: `Does ExplainCanvas follow the Class ${cls} ${subject} textbook?`,
+    a: `Yes. Every explanation is pitched at Class ${cls}, mapped to the chapter it belongs to, and follows the standard textbook treatment of the topic. The learner's level is set once on the account, so depth and vocabulary match what they see in school. The same product also answers questions well beyond school, up to research level.`,
   },
   {
     q: "Is it free?",
@@ -47,7 +48,7 @@ export const LANDERS: Lander[] = [
     classLevel: 6,
     subject: "Science",
     title: "Class 6 Science, explained visually",
-    metaTitle: "Class 6 Science (NCERT Curiosity) explained with diagrams and animations | CBSE",
+    metaTitle: "Class 6 Science explained with diagrams and animations, chapter by chapter",
     description: "Ask any Class 6 Science doubt and see the answer drawn: food, magnets, measurement, materials, water, separation, living things, space. Free library, one check question, parent report.",
     intro: "Class 6 is where Science stops being a story and starts asking why. A good picture at the right moment makes the difference between memorising and understanding.",
     questions: {
@@ -68,7 +69,7 @@ export const LANDERS: Lander[] = [
     classLevel: 7,
     subject: "Science",
     title: "Class 7 Science, explained visually",
-    metaTitle: "Class 7 Science (NCERT Curiosity) explained with diagrams and animations | CBSE",
+    metaTitle: "Class 7 Science explained with diagrams and animations, chapter by chapter",
     description: "Acids and bases, circuits, metals, physical and chemical changes, heat, time and motion, life processes, light, the Earth and Moon. Ask it, see it, answer one check question.",
     intro: "Class 7 brings the first real mechanisms: how a leaf makes food, how heat travels, why an acid and a base cancel. Mechanisms are easiest to understand as moving pictures.",
     questions: {
@@ -90,7 +91,7 @@ export const LANDERS: Lander[] = [
     classLevel: 8,
     subject: "Science",
     title: "Class 8 Science, explained visually",
-    metaTitle: "Class 8 Science (NCERT Curiosity) explained with diagrams and animations | CBSE",
+    metaTitle: "Class 8 Science explained with diagrams and animations, chapter by chapter",
     description: "Microbes and cells, health, electricity, forces, pressure and cyclones, particles, elements and mixtures, solutions, mirrors and lenses, the sky. Every doubt answered as a picture built for that question.",
     intro: "Class 8 is heavy on forces and on things too small to see. Both are better drawn than described.",
     questions: {
@@ -113,7 +114,7 @@ export const LANDERS: Lander[] = [
     classLevel: 9,
     subject: "Science",
     title: "Class 9 Science, explained visually",
-    metaTitle: "Class 9 Science explained chapter by chapter with diagrams, 3D and animation | CBSE",
+    metaTitle: "Class 9 Science explained chapter by chapter with diagrams, 3D and animation",
     description: "Matter, atoms, structure of the atom, cells, tissues, motion, force and laws of motion, gravitation, work and energy, sound. Ask any Class 9 Science doubt and see the answer drawn.",
     intro: "Class 9 is the jump. Newton's laws, atoms, tissues, gravitation. Students who can picture these ideas carry them into Class 10 and the boards. Students who memorise them start again every year.",
     questions: {
@@ -136,7 +137,7 @@ export const LANDERS: Lander[] = [
     classLevel: 10,
     subject: "Science",
     title: "Class 10 Science, explained visually",
-    metaTitle: "Class 10 Science explained chapter by chapter with diagrams, 3D and animation | CBSE boards",
+    metaTitle: "Class 10 Science explained chapter by chapter with diagrams, 3D and animation",
     description: "Chemical reactions, acids and bases, metals, carbon, life processes, control and coordination, reproduction, heredity, light, the eye, electricity, magnetism. Board-year doubts answered as a picture, with a check question.",
     intro: "Board year. Every chapter has one or two ideas that come up again and again: refraction in lenses, the heart's double circulation, Ohm's law, Mendel's ratios. Seeing them once properly is worth hours of rereading.",
     questions: {
@@ -161,7 +162,7 @@ export const LANDERS: Lander[] = [
     classLevel: 9,
     subject: "Maths",
     title: "Class 9 Maths, explained step by step",
-    metaTitle: "Class 9 Maths explained chapter by chapter, step by step with diagrams | CBSE",
+    metaTitle: "Class 9 Maths explained chapter by chapter, step by step with diagrams",
     description: "Number systems, polynomials, coordinate geometry, linear equations, Euclid, lines and angles, triangles, quadrilaterals, circles, Heron's formula, surface areas, statistics. Every method shown one step at a time.",
     intro: "Maths doubts are usually one missing step. ExplainCanvas shows the whole working, one line at a time, and draws the figure next to it.",
     questions: {
@@ -184,7 +185,7 @@ export const LANDERS: Lander[] = [
     classLevel: 10,
     subject: "Maths",
     title: "Class 10 Maths, explained step by step",
-    metaTitle: "Class 10 Maths explained chapter by chapter, step by step with diagrams | CBSE boards",
+    metaTitle: "Class 10 Maths explained chapter by chapter, step by step with diagrams",
     description: "Real numbers, polynomials, linear equations, quadratic equations, arithmetic progressions, triangles, coordinate geometry, trigonometry, circles, areas, surface areas, statistics, probability. Board-year methods shown one step at a time.",
     intro: "Board-year Maths rewards method. Every solution here is shown as steps with the reason for each, and the figure is drawn alongside so the student sees what the algebra is doing.",
     questions: {
@@ -228,11 +229,11 @@ export function landerChapters(l: Lander): NcertChapter[] {
 export const GENERAL_FAQ: { q: string; a: string }[] = [
   {
     q: "What is ExplainCanvas?",
-    a: "ExplainCanvas is an AI learning tool for CBSE Classes 6 to 10. A student types or photographs the thing they are stuck on, and the explanation arrives as a diagram, a set of steps, slides, an animation or a 3D model, whichever fits the idea. Each explanation is mapped to its NCERT chapter and ends with one check question, and parents get an email of what was understood.",
+    a: "ExplainCanvas is an AI learning tool for any academic subject at any level. You type or photograph the thing you are stuck on, and the explanation arrives as a diagram, a set of steps, slides, an animation or a 3D model, whichever fits the idea. Each explanation is checked before you see it and ends with one check question. School learners get chapter mapping, and parents can receive an email of what was understood.",
   },
   {
-    q: "Which classes and subjects does ExplainCanvas cover?",
-    a: "Classes 6 to 10 of the CBSE curriculum, with a focus on Science (physics, chemistry, biology) and Maths. Explanations follow the NCERT treatment of each topic and name the chapter they come from.",
+    q: "Which subjects and levels does ExplainCanvas cover?",
+    a: "Any academic subject, from school Science and Maths to undergraduate engineering, economics, medicine or humanities, and on to postgraduate and research topics. You set your level once and every explanation is pitched there. For school classes, explanations also name the textbook chapter they come from.",
   },
   {
     q: "How much does ExplainCanvas cost?",

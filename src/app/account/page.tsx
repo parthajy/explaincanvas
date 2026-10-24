@@ -6,6 +6,7 @@ import { creditBalance, recentLedger } from "@/lib/credits/ledger";
 import { settings, students } from "@/lib/repo";
 import { AddStudentForm } from "@/components/AddStudentForm";
 import { ReportToggle } from "@/components/ReportToggle";
+import { levelLabel } from "@/lib/levels";
 import { ManageBillingButton } from "@/components/CheckoutButton";
 import { DangerZone } from "@/components/DangerZone";
 import { Logo } from "@/components/Logo";
@@ -34,7 +35,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
 
       <main className="mx-auto max-w-3xl px-6 pb-24 pt-6">
         <h1 className="text-[34px] font-semibold tracking-[-0.03em]">{welcome ? "Welcome. One quick thing." : "Account"}</h1>
-        <p className="mt-1 text-[15px] text-muted">{welcome ? "Add your child so every explanation is pitched at their class." : user.email}</p>
+        <p className="mt-1 text-[15px] text-muted">{welcome ? "Add a learner, yourself or your child, so every explanation is pitched at the right level." : user.email}</p>
 
         {checkout && (
           <div className="mt-6 rounded-2xl border border-border bg-panel px-5 py-4 text-[14px]">
@@ -74,16 +75,16 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         </section>
 
         <section className="mt-10">
-          <h2 className="text-[18px] font-semibold tracking-tight">Students</h2>
+          <h2 className="text-[18px] font-semibold tracking-tight">Learners</h2>
           <p className="mt-1 text-[14px] text-muted">
-            Your plan allows {plan.studentProfiles}. The student&apos;s class tunes every explanation.
+            Your plan allows {plan.studentProfiles}. Each learner&apos;s level tunes every explanation, from Class 6 to PhD.
           </p>
           <div className="mt-4 space-y-3">
             {kids.map((s) => (
               <div key={s.id} className="flex items-center justify-between rounded-3xl border border-border bg-panel p-5">
                 <div>
                   <div className="text-[16px] font-medium">{s.name}</div>
-                  <div className="text-[13px] text-muted">Class {s.class_level}</div>
+                  <div className="text-[13px] text-muted">{levelLabel(s.class_level)}</div>
                 </div>
                 <div className="text-right">
                   <div className="text-[15px] font-medium tabular">{s.current_days ?? 0} day streak</div>

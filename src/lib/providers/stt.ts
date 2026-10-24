@@ -16,7 +16,7 @@ async function viaOpenAI(audio: Buffer, mimeType: string): Promise<string> {
   form.append("file", new Blob([new Uint8Array(audio)], { type: mimeType }), `dictation.${ext}`);
   form.append("model", e.OPENAI_STT_MODEL);
   form.append("language", "en");
-  form.append("prompt", "A school student in India asking about Maths or Science, Classes 6 to 10. Terms like Newton, photosynthesis, Ohm's law, hypotenuse.");
+  form.append("prompt", "A student in India asking an academic question: maths, science, engineering, economics, medicine, humanities. Terms like Newton, photosynthesis, Ohm's law, hypotenuse, eigenvalue, mitochondria.");
   const res = await fetch("https://api.openai.com/v1/audio/transcriptions", { method: "POST", headers: { Authorization: `Bearer ${e.OPENAI_API_KEY}` }, body: form });
   if (!res.ok) throw new Error(`openai transcription failed: ${res.status} ${(await res.text().catch(() => "")).slice(0, 160)}`);
   const json = (await res.json()) as { text?: string };

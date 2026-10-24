@@ -28,13 +28,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { l, c } = r;
   return pageMetadata({
     title: `Class ${l.classLevel} ${l.subject} Chapter ${c.n}: ${c.name}, explained visually`,
-    description: `NCERT Class ${l.classLevel} ${l.subject} Chapter ${c.n} (${c.name}): the questions students ask, each answered as a diagram, steps, animation or 3D model with a check question. Free library lessons included.`,
+    description: `Class ${l.classLevel} ${l.subject} Chapter ${c.n} (${c.name}): the questions students ask, each answered as a diagram, steps, animation or 3D model with a check question. Free library lessons included.`,
     path: `/learn/${l.slug}/${chapter}`,
-    keywords: [`Class ${l.classLevel} ${l.subject} Chapter ${c.n}`, c.name, `NCERT Class ${l.classLevel} ${c.name}`, `${c.name} explained`, `${c.name} notes`],
+    keywords: [`Class ${l.classLevel} ${l.subject} Chapter ${c.n}`, c.name, `Class ${l.classLevel} ${c.name}`, `${c.name} explained`, `${c.name} notes`],
   });
 }
 
-/** One page per NCERT chapter: "Class 9, Chapter 4" is how students and parents actually think. */
+/** One page per textbook chapter: "Class 9, Chapter 4" is how students and parents actually think. */
 export default async function ChapterPage({ params }: { params: Promise<{ slug: string; chapter: string }> }) {
   const { slug, chapter } = await params;
   const r = resolve(slug, chapter);
@@ -47,7 +47,7 @@ export default async function ChapterPage({ params }: { params: Promise<{ slug: 
   const prev = chapters.find((x) => x.n === c.n - 1);
   const next = chapters.find((x) => x.n === c.n + 1);
   const faq = [
-    { q: `What is Chapter ${c.n} of Class ${l.classLevel} ${l.subject} about?`, a: `Chapter ${c.n}, ${c.name}, is part of the NCERT Class ${l.classLevel} ${l.subject} textbook. Ask any question from it on ExplainCanvas and the answer comes back as a picture built for that question, pitched at Class ${l.classLevel}, with one check question at the end.` },
+    { q: `What is Chapter ${c.n} of Class ${l.classLevel} ${l.subject} about?`, a: `Chapter ${c.n}, ${c.name}, is part of the Class ${l.classLevel} ${l.subject} textbook. Ask any question from it on ExplainCanvas and the answer comes back as a picture built for that question, pitched at Class ${l.classLevel}, with one check question at the end.` },
     { q: `Can I ask about a specific exercise, like "Ex ${c.n}.2 Q3"?`, a: `Yes. Type the chapter, exercise and question number the way it appears in the book, or photograph the page and tap the question. The explanation is mapped to Chapter ${c.n} so it shows up in your parent's report under the right chapter.` },
     ...l.faq.slice(0, 2),
   ];
@@ -63,13 +63,13 @@ export default async function ChapterPage({ params }: { params: Promise<{ slug: 
       "@context": "https://schema.org",
       "@type": "LearningResource",
       name: `Class ${l.classLevel} ${l.subject} Chapter ${c.n}: ${c.name}`,
-      description: `Visual explanations for NCERT Class ${l.classLevel} ${l.subject} Chapter ${c.n}, ${c.name}.`,
+      description: `Visual explanations for Class ${l.classLevel} ${l.subject} Chapter ${c.n}, ${c.name}.`,
       url: `${SITE.url}/learn/${l.slug}/${chapter}`,
       educationalLevel: `Class ${l.classLevel}`,
       learningResourceType: "visual explanation",
       inLanguage: "en-IN",
       isAccessibleForFree: true,
-      educationalAlignment: { "@type": "AlignmentObject", alignmentType: "educationalSubject", educationalFramework: "NCERT", targetName: `Class ${l.classLevel} ${l.subject} Chapter ${c.n}` },
+      educationalAlignment: { "@type": "AlignmentObject", alignmentType: "educationalSubject", targetName: `Class ${l.classLevel} ${l.subject} Chapter ${c.n}` },
       provider: { "@type": "Organization", name: SITE.name, url: SITE.url },
     },
   ];
@@ -86,7 +86,7 @@ export default async function ChapterPage({ params }: { params: Promise<{ slug: 
           { name: `Chapter ${c.n}`, href: `/learn/${l.slug}/${chapter}` },
         ]}
       />
-      <Hero eyebrow={`NCERT · Class ${l.classLevel} ${l.subject} · Chapter ${c.n}`} title={c.name} lede={`Everything in Chapter ${c.n} of the Class ${l.classLevel} ${l.subject} textbook, answered the way your child asks it. Type the doubt, or the exercise number, or photograph the page.`} secondary={{ label: "All chapters", href: `/learn/${l.slug}` }} />
+      <Hero eyebrow={`Class ${l.classLevel} ${l.subject} · Chapter ${c.n}`} title={c.name} lede={`Everything in Chapter ${c.n} of the Class ${l.classLevel} ${l.subject} textbook, answered the way your child asks it. Type the doubt, or the exercise number, or photograph the page.`} secondary={{ label: "All chapters", href: `/learn/${l.slug}` }} />
 
       <section className="mx-auto mt-16 max-w-6xl px-6">
         <SectionTitle title="Ask one of these." lede="Tap a question. It opens in the chat, ready to send." />

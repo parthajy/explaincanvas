@@ -9,7 +9,7 @@ export const SITE = {
   name: "ExplainCanvas",
   url: process.env.APP_URL ?? "https://explaincanvas.com",
   tagline: "Type anything you are stuck on. Understand it visually.",
-  description: "AI explanations for CBSE Classes 6 to 10 that arrive as a diagram, steps, slides, an animation or a 3D model, checked for accuracy, with one check question and a daily parent report.",
+  description: "Type any academic question and understand it visually: a diagram, steps, slides, an animation or a 3D model, checked for accuracy, with one check question at the end. Any subject, any level.",
   email: "hello@explaincanvas.com",
   twitter: "@explaincanvas",
 };
@@ -64,7 +64,7 @@ export function softwareLd(prices: { name: string; pricePaise: number; interval:
     operatingSystem: "Web",
     url: SITE.url,
     description: SITE.description,
-    audience: { "@type": "EducationalAudience", educationalRole: "student", audienceType: "CBSE Classes 6 to 10" },
+    audience: { "@type": "EducationalAudience", educationalRole: "student", audienceType: "learners from school to postgraduate study" },
     offers: prices.map((p) => ({
       "@type": "Offer",
       name: p.name,
@@ -105,7 +105,7 @@ export function learningResourceLd(input: { title: string; description: string; 
     learningResourceType: "visual explanation",
     educationalLevel: `Class ${input.classLevel}`,
     about: input.subject,
-    educationalAlignment: { "@type": "AlignmentObject", alignmentType: "educationalSubject", educationalFramework: "CBSE", targetName: input.subject },
+    educationalAlignment: { "@type": "AlignmentObject", alignmentType: "educationalSubject", targetName: input.subject },
     provider: { "@type": "Organization", name: SITE.name, url: SITE.url },
     dateModified: input.dateModified,
   };

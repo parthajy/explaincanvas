@@ -35,18 +35,18 @@ export function welcome(i: { appUrl: string; name?: string | null; unsubscribeUr
   const hi = first(i.name) ? `Hi ${esc(first(i.name)!)},` : "Hi,";
   const body =
     p(hi) +
-    p("Welcome to ExplainCanvas. Here is the whole idea in one line: your child types what they are stuck on, and the explanation arrives as a picture, steps, slides, an animation or a 3D model, with one quick check question at the end.") +
+    p("Welcome to ExplainCanvas. Here is the whole idea in one line: type what you are stuck on, any subject, any level, and the explanation arrives as a picture, steps, slides, an animation or a 3D model, with one quick check question at the end.") +
     p("Three things worth trying today:") +
     `<ol style="margin:0 0 12px 20px;padding:0;line-height:1.7">
       <li><strong>Ask a real doubt.</strong> “Why don't action and reaction forces cancel out?” works better than “Newton's third law”.</li>
       <li><strong>Photograph the textbook.</strong> Tap the camera in the box and point it at the question.</li>
-      <li><strong>Add your child's class</strong> in Account so every explanation matches the syllabus.</li>
+      <li><strong>Set the level</strong> in Account, yours or your child's, from Class 6 to PhD, so every explanation is pitched right.</li>
     </ol>` +
     p("You get one free diagram, and the library of validated explanations is open to everyone.");
   return {
     subject: "Welcome to ExplainCanvas. Here is how to get the most from it",
     html: layout({ appUrl: i.appUrl, eyebrow: "Welcome", heading: "Understanding, drawn out", body, cta: { label: "Ask your first question", href: `${i.appUrl}/` }, footer: "Reply to this email any time. A person reads it.", unsubscribeUrl: i.unsubscribeUrl }),
-    text: `Welcome to ExplainCanvas.\n\nYour child types what they are stuck on and gets a picture, steps, slides, an animation or a 3D model with one check question.\n\nTry today:\n1. Ask a real doubt, like "Why don't action and reaction forces cancel out?"\n2. Photograph the textbook question with the camera button.\n3. Add your child's class in Account.\n\nStart: ${i.appUrl}/\n\nStop tips and offers: ${i.unsubscribeUrl}`,
+    text: `Welcome to ExplainCanvas.\n\nYour child types what they are stuck on and gets a picture, steps, slides, an animation or a 3D model with one check question.\n\nTry today:\n1. Ask a real doubt, like "Why don't action and reaction forces cancel out?"\n2. Photograph the textbook question with the camera button.\n3. Set the level in Account, yours or your child's.\n\nStart: ${i.appUrl}/\n\nStop tips and offers: ${i.unsubscribeUrl}`,
   };
 }
 

@@ -4,11 +4,12 @@ import { structuredCall, type ModelUsage } from "@/lib/ai/client";
 import { ROUTER_SYSTEM } from "@/lib/ai/prompts";
 import { Format, Subject } from "@/lib/scene/schema";
 import { env } from "@/lib/env";
+import { levelLabel } from "@/lib/levels";
 
 export const RouterDecision = z.object({
   intent: z.enum(["explain", "solve", "followup", "chitchat", "offtopic", "unsafe"]),
   subject: Subject,
-  classLevel: z.number().int().min(1).max(12),
+  classLevel: z.number().int().min(1).max(20),
   concept: z.object({
     key: z.string(),
     title: z.string(),
@@ -57,10 +58,10 @@ export async function routeMessage(input: RouterInput): Promise<{ decision: Rout
 
   const header = [
     `Enabled formats: ${enabled.join(", ")}.`,
-    input.studentClass ? `Student's class: ${input.studentClass}.` : "Student's class: unknown.",
+    input.studentClass ? `Learner's level: ${input.studentClass} (${levelLabel(input.studentClass)}).` : "Learner's level: unknown.",
     `A previous explanation exists in this chat: ${input.hasPriorExplanation ? "yes" : "no"}.`,
     input.imageBase64 ? "The student attached a photo (shown)." : "No photo attached.",
-    input.ncertIndex ? `NCERT chapter index for this student's class. ${input.ncertIndex}` : "No NCERT chapter index available: set ncertChapter to null.",
+    input.ncertIndex ? `Textbook chapter index for this learner's class. ${input.ncertIndex}` : "No chapter index available: set ncertChapter to null.",
     context ? `Recent chat:\n${context}` : "Recent chat: none.",
     `Student's message:\n${input.text}`,
   ].join("\n\n");

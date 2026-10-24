@@ -6,8 +6,8 @@ import { SiteHeader, SiteFooter } from "@/components/SiteShell";
 import { Hero, CtaBand, JsonLdScript, Steps, SectionTitle } from "@/components/Marketing";
 
 export const metadata: Metadata = pageMetadata({
-  title: "CBSE Classes 6 to 10, explained visually",
-  description: "Pick a class and subject. See the questions students ask, how each is answered as a picture, and what it costs. Science and Maths, NCERT aligned.",
+  title: "Chapter guides: school Science and Maths, explained visually",
+  description: "Chapter-by-chapter guides for school Science and Maths with the questions students really ask. Beyond these, ask anything from any subject at any level.",
   path: "/learn",
 });
 
@@ -16,7 +16,7 @@ export default function LearnHub() {
     <div className="min-h-dvh bg-bg text-text">
       <JsonLdScript data={breadcrumbLd([{ name: "Home", path: "/" }, { name: "Learn", path: "/learn" }])} />
       <SiteHeader />
-      <Hero eyebrow="Learn" title="Pick a class. Ask anything in it." lede="Every page below lists the questions students in that class really ask, with the chapters they come from. Tap one and see it drawn." cta={null} />
+      <Hero eyebrow="Guides" title="Chapter guides for school Science and Maths." lede="Every page below lists the questions students in that class really ask, chapter by chapter. These are starting points: the product answers any academic question at any level, from a Class 6 doubt to a research paper." cta={null} />
       <section className="mx-auto mt-14 max-w-6xl px-6">
         <div className="grid gap-px overflow-hidden rounded-3xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
           {LANDERS.map((l) => (

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({ title: "Privacy policy", description: "Privacy policy for ExplainCanvas, the visual AI learning tool for CBSE Classes 6 to 10.", path: "/legal/privacy" });
+export const metadata: Metadata = pageMetadata({ title: "Privacy policy", description: "Privacy policy for ExplainCanvas, the visual AI learning tool for any subject and level.", path: "/legal/privacy" });
 
 export default function PrivacyPage() {
   return (
@@ -10,7 +10,7 @@ export default function PrivacyPage() {
       <p className="text-muted">Last updated 23 October 2026. This is a plain-language draft for launch and should be reviewed by a lawyer before the product takes payments at scale.</p>
 
       <h2>Who we are</h2>
-      <p>ExplainCanvas is a learning product for school students in India, operated by its founder (the &quot;operator&quot;). A parent or guardian creates the account; a child uses it under that account.</p>
+      <p>ExplainCanvas is a learning product operated by its founder (the &quot;operator&quot;). Adults create accounts for themselves; for a child, a parent or guardian creates the account and the child uses it under that account.</p>
 
       <h2>What we collect</h2>
       <ul>

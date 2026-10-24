@@ -34,7 +34,7 @@ export default function OpenGraphImage() {
           <div style={{ fontSize: 76, fontWeight: 600, letterSpacing: -2, lineHeight: 1.05 }}>Type anything you are stuck on.</div>
           <div style={{ fontSize: 76, fontWeight: 600, letterSpacing: -2, lineHeight: 1.05, color: "#8a8a8a" }}>Understand it visually.</div>
         </div>
-        <div style={{ fontSize: 28, color: "#8a8a8a" }}>Diagrams, steps, 3D and animation for Classes 6 to 10, checked for accuracy. Parents get a report every evening.</div>
+        <div style={{ fontSize: 28, color: "#8a8a8a" }}>Diagrams, steps, 3D and animation for any subject at any level, checked for accuracy before you see them.</div>
       </div>
     ),
     size,

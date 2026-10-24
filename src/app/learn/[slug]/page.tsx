@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const l = landerBySlug(slug);
   if (!l) return { title: "Not found" };
-  return pageMetadata({ title: l.metaTitle, description: l.description, path: `/learn/${l.slug}`, keywords: [`CBSE Class ${l.classLevel} ${l.subject}`, `Class ${l.classLevel} ${l.subject} explained`, "NCERT", "visual learning", "AI tutor India"] });
+  return pageMetadata({ title: l.metaTitle, description: l.description, path: `/learn/${l.slug}`, keywords: [`Class ${l.classLevel} ${l.subject}`, `Class ${l.classLevel} ${l.subject} explained`, "chapter guide", "visual learning", "AI tutor India"] });
 }
 
 /** One lander per class and subject: what a student will type, what comes back, what it costs. */
@@ -34,7 +34,7 @@ export default async function LanderPage({ params }: { params: Promise<{ slug: s
     {
       "@context": "https://schema.org",
       "@type": "Course",
-      name: `CBSE Class ${l.classLevel} ${l.subject} with ExplainCanvas`,
+      name: `Class ${l.classLevel} ${l.subject} with ExplainCanvas`,
       description: l.description,
       provider: { "@type": "Organization", name: SITE.name, url: SITE.url },
       educationalLevel: `Class ${l.classLevel}`,
@@ -51,10 +51,10 @@ export default async function LanderPage({ params }: { params: Promise<{ slug: s
       <JsonLdScript data={ld} />
       <SiteHeader />
       <Breadcrumbs items={[{ name: "Home", href: "/" }, { name: "Learn", href: "/learn" }, { name: `Class ${l.classLevel} ${l.subject}`, href: `/learn/${l.slug}` }]} />
-      <Hero eyebrow={`CBSE · Class ${l.classLevel} · ${l.subject}`} title={l.title} lede={l.intro} secondary={{ label: "Browse free lessons", href: `/library?class=${l.classLevel}` }} />
+      <Hero eyebrow={`Chapter guide · Class ${l.classLevel} · ${l.subject}`} title={l.title} lede={l.intro} secondary={{ label: "Browse free lessons", href: `/library?class=${l.classLevel}` }} />
 
       <section className="mx-auto mt-20 max-w-6xl px-6">
-        <SectionTitle title="Every chapter, the way students ask it." lede="Tap a question to ask it, or open the chapter for more. Each answer is a picture built for that question, mapped to the NCERT chapter." />
+        <SectionTitle title="Every chapter, the way students ask it." lede="Tap a question to ask it, or open the chapter for more. Each answer is a picture built for that question, mapped to its textbook chapter." />
         <div className="mt-8 grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-2">
           {landerChapters(l).map((c) => (
             <div key={c.n} className="bg-panel p-6">

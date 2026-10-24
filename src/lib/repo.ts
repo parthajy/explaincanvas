@@ -329,7 +329,7 @@ export const library = {
   listPublished: (filter: { classLevel?: number; subject?: string; chapter?: number; subjectGroup?: "science" | "maths" }) =>
     q<Pick<LessonRow, "id" | "concept_title" | "subject" | "class_level" | "format" | "title" | "serve_count" | "ncert_chapter">>(
       `select id, concept_title, subject, class_level, format, title, serve_count, ncert_chapter from library_lessons
-        where status = 'published' and ($1::smallint is null or class_level = $1) and ($2::text is null or subject = $2)
+        where status = 'published' and ($1::smallint is null or (case when $1 >= 13 then class_level >= 13 else class_level = $1 end)) and ($2::text is null or subject = $2)
           and ($3::smallint is null or ncert_chapter = $3)
           and ($4::text is null or ($4 = 'maths' and subject = 'maths') or ($4 = 'science' and subject in ('science','physics','chemistry','biology')))
         order by class_level, subject, ncert_chapter nulls last, concept_title limit 500`,

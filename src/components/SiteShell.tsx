@@ -12,7 +12,7 @@ export function SiteHeader({ cta = true }: { cta?: boolean }) {
           How it works
         </Link>
         <Link href="/learn" className="hover:text-text">
-          Classes
+          Guides
         </Link>
         <Link href="/library" className="hover:text-text">
           Library
@@ -46,7 +46,7 @@ export function SiteFooter() {
         </div>
         <nav className="flex flex-wrap gap-x-6 gap-y-2 text-[12px] text-muted" aria-label="Footer">
           <Link href="/how-it-works">How it works</Link>
-          <Link href="/learn">Classes</Link>
+          <Link href="/learn">Guides</Link>
           <Link href="/library">Library</Link>
           <Link href="/for-parents">For parents</Link>
           <Link href="/pricing">Pricing</Link>

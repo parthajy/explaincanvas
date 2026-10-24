@@ -9,16 +9,16 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "ExplainCanvas: visual AI explanations for CBSE Classes 6 to 10", template: "%s | ExplainCanvas" },
+  title: { default: "ExplainCanvas: understand anything visually", template: "%s | ExplainCanvas" },
   description: SITE.description,
   metadataBase: new URL(SITE.url),
   applicationName: SITE.name,
-  keywords: ["CBSE", "Class 6 to 10", "visual learning", "AI tutor India", "doubt solving", "NCERT explained", "diagram", "3D", "animation", "parent report"],
+  keywords: ["visual learning", "AI tutor", "explain with a diagram", "doubt solving", "concept explained visually", "3D", "animation", "step by step", "study help", "India"],
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
   category: "education",
   alternates: { canonical: SITE.url },
-  openGraph: { siteName: SITE.name, type: "website", locale: "en_IN", url: SITE.url, title: "ExplainCanvas: visual AI explanations for CBSE Classes 6 to 10", description: SITE.tagline },
+  openGraph: { siteName: SITE.name, type: "website", locale: "en_IN", url: SITE.url, title: "ExplainCanvas: understand anything visually", description: SITE.tagline },
   twitter: { card: "summary_large_image", title: "ExplainCanvas", description: SITE.tagline },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 } },
   formatDetection: { telephone: false },

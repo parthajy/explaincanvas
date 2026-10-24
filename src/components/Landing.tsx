@@ -57,7 +57,7 @@ export function Landing() {
             How it works
           </Link>
           <Link href="/learn" className="hover:text-white">
-            Classes
+            Guides
           </Link>
           <Link href="/library" className="hover:text-white">
             Library
@@ -76,7 +76,7 @@ export function Landing() {
 
       <section className="mx-auto max-w-6xl px-6 pt-16 md:pt-28">
         <span className="inline-block rounded-full border px-3 py-1 text-[12px] tracking-wide" style={{ borderColor: dark.line, color: dark.muted }}>
-          Classes 6 to 10 · CBSE · Maths and Science
+          Any subject · Any level · School to research
         </span>
         <h1 className="mt-8 max-w-4xl text-[44px] font-semibold leading-[1.02] tracking-[-0.03em] md:text-[84px]">
           Type anything you are stuck on. <span style={{ color: dark.muted }}>Understand it visually.</span>
@@ -173,7 +173,7 @@ export function Landing() {
             {[
               ["01", "Ask, or photograph the page", "Type it in your own words, dictate it, or point the camera at the textbook."],
               ["02", "See it the way it makes sense", "The format that teaches it best is chosen, the explanation is written, then checked by a second pass before it is shown."],
-              ["03", "Prove it clicked", "One check question. Get it and the parent hears about it that evening. Miss it and it explains again, differently."],
+              ["03", "Prove it clicked", "One check question. Get it and it goes into your evening report. Miss it and it explains again, differently."],
             ].map(([n, t, b]) => (
               <div key={n} className="bg-white p-8">
                 <div className="text-[12px] tabular text-[#9a9a9a]">{n}</div>

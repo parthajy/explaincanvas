@@ -18,6 +18,9 @@ const SUGGESTIONS: Record<string, string[]> = {
   "8": ["Why does a ball keep rolling after I stop pushing it?", "How does a cell divide?", "Why do we see a rainbow?", "Show me how a pinhole camera works"],
   "9": ["Why don't action and reaction forces cancel out?", "Why does sound need a medium to travel?", "Show me the parts of a plant cell in 3D", "How does the Pythagoras theorem work?"],
   "10": ["How does light bend when it enters water?", "Why does a lemon battery work?", "Show me how the human eye focuses", "What is the difference between speed and velocity?"],
+  "11": ["Show me projectile motion as an animation", "Why does entropy always increase?", "Walk me through a limit from first principles", "Show me the structure of benzene in 3D"],
+  "12": ["Show me how a p-n junction works", "Why does integration give area?", "Show me how DNA replicates step by step", "What does the Hall effect look like?"],
+  higher: ["Give me an intuition for the Fourier transform", "Show me gradient descent step by step on a 2D surface", "Why does a PID controller overshoot?", "Show me how an action potential propagates"],
 };
 
 export function ChatView({ chatId }: { chatId: string | null }) {
@@ -227,7 +230,7 @@ export function ChatView({ chatId }: { chatId: string | null }) {
   }, []);
 
   const classLevel = me?.students[0]?.class_level;
-  const suggestions = SUGGESTIONS[String(classLevel ?? "")] ?? SUGGESTIONS.default;
+  const suggestions = SUGGESTIONS[String(classLevel ?? "")] ?? (classLevel && classLevel >= 13 ? SUGGESTIONS.higher : SUGGESTIONS.default);
 
   // Keyboard: "/" focuses the composer, Cmd/Ctrl+K starts a new chat.
   useEffect(() => {

@@ -29,7 +29,7 @@ export const Concept = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "concept key must be a kebab-case slug"),
   title: z.string().min(2).max(160),
   subject: Subject,
-  classLevel: z.number().int().min(1).max(12),
+  classLevel: z.number().int().min(1).max(20),
   board: z.string().default("CBSE"),
   chapter: z.string().max(160).optional(),
   /** NCERT mapping: "Class 9, Ch 4, Ex 4.2 Q3" is how students and parents think. */
