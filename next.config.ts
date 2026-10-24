@@ -1,9 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  // The product is per-user and dynamic end to end; the classic rendering model keeps
+  // route handlers and server components request-time by default.
+  cacheComponents: false,
+  partialPrefetching: false,
   turbopack: {
     rules: {
       "*.css": {
@@ -12,6 +13,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  serverExternalPackages: ["pino", "pino-pretty"],
 };
 
 export default nextConfig;

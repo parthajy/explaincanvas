@@ -1,0 +1,16 @@
+[Unit]
+Description=ExplainCanvas worker (job queue)
+After=network.target
+
+[Service]
+Type=simple
+User=app
+WorkingDirectory=/srv/explaincanvas
+EnvironmentFile=/srv/explaincanvas/.env.production
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/pnpm worker:prod
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

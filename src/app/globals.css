@@ -1,26 +1,297 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Monochrome system. Light by default, dark via html[data-theme="dark"] or the OS preference
+   when html[data-theme="system"]. One quiet accent for status only. */
+:root,
+html[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-2: #fafafa;
+  --panel: #ffffff;
+  --panel-2: #f4f4f5;
+  --border: #e4e4e7;
+  --border-2: #d4d4d8;
+  --text: #09090b;
+  --muted: #71717a;
+  --faint: #a1a1aa;
+  --primary: #09090b;
+  --primary-2: #27272a;
+  --primary-soft: #f4f4f5;
+  --on-primary: #ffffff;
+  --accent: #a1a1aa;
+  --success: #15803d;
+  --danger: #b91c1c;
+  --ring: rgba(9, 9, 11, 0.18);
+  --shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.25);
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html[data-theme="dark"] {
+  --bg: #09090b;
+  --bg-2: #0f0f11;
+  --panel: #111113;
+  --panel-2: #18181b;
+  --border: #27272a;
+  --border-2: #3f3f46;
+  --text: #fafafa;
+  --muted: #a1a1aa;
+  --faint: #71717a;
+  --primary: #fafafa;
+  --primary-2: #e4e4e7;
+  --primary-soft: #1f1f23;
+  --on-primary: #09090b;
+  --accent: #71717a;
+  --success: #4ade80;
+  --danger: #f87171;
+  --ring: rgba(250, 250, 250, 0.22);
+  --shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html[data-theme="system"] {
+    --bg: #09090b;
+    --bg-2: #0f0f11;
+    --panel: #111113;
+    --panel-2: #18181b;
+    --border: #27272a;
+    --border-2: #3f3f46;
+    --text: #fafafa;
+    --muted: #a1a1aa;
+    --faint: #71717a;
+    --primary: #fafafa;
+    --primary-2: #e4e4e7;
+    --primary-soft: #1f1f23;
+    --on-primary: #09090b;
+    --accent: #71717a;
+    --success: #4ade80;
+    --danger: #f87171;
+    --ring: rgba(250, 250, 250, 0.22);
+    --shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8);
+    color-scheme: dark;
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-border: var(--border);
+  --color-border-2: var(--border-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-primary: var(--primary);
+  --color-primary-2: var(--primary-2);
+  --color-primary-soft: var(--primary-soft);
+  --color-on-primary: var(--on-primary);
+  --color-accent: var(--accent);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.scene-svg svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Diagrams are authored on white; keep them readable in dark mode. */
+.scene-svg {
+  background: #fff;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--border-2);
+  border-radius: 9999px;
+}
+
+@keyframes pulse-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+.dot {
+  animation: pulse-dot 1.2s infinite ease-in-out;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.35s ease-out both;
+}
+
+@keyframes rec {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+  }
+}
+.recording {
+  animation: rec 1.2s infinite;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- motion ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: caret 1s steps(1) infinite;
+  font-weight: 300;
+}
+.draw .s1,
+.draw .s2,
+.draw .s3,
+.draw .s4 {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+}
+.draw .t1,
+.draw .t2,
+.draw .t3,
+.draw .t4,
+.draw .t5 {
+  opacity: 0;
+}
+.draw.is-in .s1 {
+  animation: drawline 0.9s 0.1s ease-out forwards;
+}
+.draw.is-in .s2 {
+  animation: drawline 0.9s 0.5s ease-out forwards;
+}
+.draw.is-in .s3 {
+  animation: drawline 0.7s 1.1s ease-out forwards;
+}
+.draw.is-in .s4 {
+  animation: drawline 0.7s 1.6s ease-out forwards;
+}
+.draw.is-in .t1 {
+  animation: fadein 0.4s 0.8s forwards;
+}
+.draw.is-in .t2 {
+  animation: fadein 0.4s 1.2s forwards;
+}
+.draw.is-in .t3 {
+  animation: fadein 0.4s 1.7s forwards;
+}
+.draw.is-in .t4 {
+  animation: fadein 0.4s 2.2s forwards;
+}
+.draw.is-in .t5 {
+  animation: fadein 0.6s 2.6s forwards;
+}
+@keyframes drawline {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fadein {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .draw .s1,
+  .draw .s2,
+  .draw .s3,
+  .draw .s4,
+  .draw .t1,
+  .draw .t2,
+  .draw .t3,
+  .draw .t4,
+  .draw .t5 {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+  .marquee,
+  .caret {
+    animation: none !important;
+  }
 }

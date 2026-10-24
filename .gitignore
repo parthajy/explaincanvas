@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# keep the example env in the repo
+!.env.example
+
+# local data (uploads when Spaces is not configured, dev magic links)
+.data/

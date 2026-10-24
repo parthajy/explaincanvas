@@ -1,0 +1,133 @@
+# DigitalOcean App Platform spec. Deploy with: doctl apps create --spec .do/app.yaml
+# Then set the SECRET-typed values in the control panel (or via doctl apps update).
+name: explaincanvas
+region: blr
+features:
+  - buildpack-stack=ubuntu-22
+
+databases:
+  - name: db
+    engine: PG
+    version: "16"
+    production: true
+    cluster_name: explaincanvas-db
+
+jobs:
+  - name: migrate
+    kind: PRE_DEPLOY
+    source_dir: /
+    github:
+      repo: YOUR_GITHUB_ORG/explaincanvas
+      branch: main
+      deploy_on_push: true
+    build_command: corepack enable && pnpm install --frozen-lockfile
+    run_command: pnpm migrate
+    instance_size_slug: basic-xxs
+    envs:
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        value: ${db.DATABASE_URL}
+      - key: DATABASE_CA_CERT
+        scope: RUN_TIME
+        value: ${db.CA_CERT}
+
+services:
+  - name: web
+    source_dir: /
+    github:
+      repo: YOUR_GITHUB_ORG/explaincanvas
+      branch: main
+      deploy_on_push: true
+    build_command: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    run_command: pnpm start
+    http_port: 3000
+    instance_count: 1
+    instance_size_slug: basic-s
+    health_check:
+      http_path: /api/health
+    routes:
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: APP_URL
+        value: ${APP_URL}
+      - key: DATABASE_URL
+        value: ${db.DATABASE_URL}
+      - key: DATABASE_CA_CERT
+        value: ${db.CA_CERT}
+      - key: RUN_PIPELINE_INLINE
+        value: "false"
+      - key: ENABLE_FORMATS
+        value: diagram,steps,slides,three_d,annotation,animation
+      - key: SPACES_BUCKET
+        value: explaincanvas-uploads
+      - key: SPACES_REGION
+        value: blr1
+      - key: SPACES_KEY
+        type: SECRET
+      - key: SPACES_SECRET
+        type: SECRET
+      - key: GOOGLE_CLIENT_ID
+        type: SECRET
+      - key: GOOGLE_CLIENT_SECRET
+        type: SECRET
+      - key: RESEND_API_KEY
+        type: SECRET
+      - key: MAIL_FROM
+        value: "ExplainCanvas <hello@explaincanvas.com>"
+      - key: ANTHROPIC_API_KEY
+        type: SECRET
+      - key: FAL_KEY
+        type: SECRET
+      - key: ELEVEN_LABS_API_KEY
+        type: SECRET
+      - key: GEMINI_API_KEY
+        type: SECRET
+      - key: RAZORPAY_KEY_ID
+        type: SECRET
+      - key: RAZORPAY_KEY_SECRET
+        type: SECRET
+      - key: RAZORPAY_WEBHOOK_SECRET
+        type: SECRET
+
+workers:
+  - name: worker
+    source_dir: /
+    github:
+      repo: YOUR_GITHUB_ORG/explaincanvas
+      branch: main
+      deploy_on_push: true
+    build_command: corepack enable && pnpm install --frozen-lockfile
+    run_command: pnpm worker:prod
+    instance_count: 1
+    instance_size_slug: basic-s
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: APP_URL
+        value: ${APP_URL}
+      - key: DATABASE_URL
+        value: ${db.DATABASE_URL}
+      - key: DATABASE_CA_CERT
+        value: ${db.CA_CERT}
+      - key: ENABLE_FORMATS
+        value: diagram,steps,slides,three_d,annotation,animation
+      - key: SPACES_BUCKET
+        value: explaincanvas-uploads
+      - key: SPACES_REGION
+        value: blr1
+      - key: SPACES_KEY
+        type: SECRET
+      - key: SPACES_SECRET
+        type: SECRET
+      - key: ANTHROPIC_API_KEY
+        type: SECRET
+      - key: FAL_KEY
+        type: SECRET
+      - key: ELEVEN_LABS_API_KEY
+        type: SECRET
+      - key: GEMINI_API_KEY
+        type: SECRET
+      - key: RESEND_API_KEY
+        type: SECRET

@@ -6,22 +6,49 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "worker": "PINO_PRETTY=1 tsx --env-file-if-exists=.env.local watch src/worker/index.ts",
+    "worker:prod": "tsx src/worker/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "smoke": "tsx --env-file-if-exists=.env.local scripts/smoke.ts",
+    "test:int": "RUN_INT=1 vitest run",
+    "grant": "tsx --env-file-if-exists=.env.local scripts/grant.ts",
+    "migrate": "tsx --env-file-if-exists=.env.local scripts/migrate.ts",
+    "db:setup": "bash scripts/db-local.sh setup",
+    "db:start": "bash scripts/db-local.sh start",
+    "db:stop": "bash scripts/db-local.sh stop",
+    "logo:export": "node scripts/export-logo.mjs",
+    "plan": "tsx --env-file-if-exists=.env.local scripts/plan.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^1.1.0",
+    "@aws-sdk/client-s3": "^3.1156.0",
+    "nanoid": "^6.0.2",
     "next": "16.4.2",
+    "pg": "^8.23.1",
+    "pino": "^10.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "sanitize-html": "^2.18.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.2",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "pino-pretty": "^13.2.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.23.15",
+    "typescript": "^5",
+    "vitest": "^5.0.5"
   },
   "packageManager": "pnpm@9.15.5"
 }
