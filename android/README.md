@@ -16,6 +16,12 @@ engine, with no browser bar. Everything the site does, the app does. Nothing is 
 
 Package name: `com.explaincanvas.app`. Version 1.0.0, version code 1.
 
+## What the app shows
+
+Signed out, the app opens on three onboarding screens (Ask, See, Check) with Skip and Next, then the sign-in page.
+The screens are shown once per device; later launches go straight to sign-in. The marketing site never appears
+inside the app. Signed in, the app opens on the chat, exactly like the website.
+
 ## How the site knows it is inside the app
 
 The wrapper launches `https://explaincanvas.com/?source=app`. The proxy sets a one-year `ec_app` cookie and

@@ -45,7 +45,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             </span>
           </div>
           <h2 className="mt-10 text-[28px] font-semibold tracking-tight md:mt-0">Sign in</h2>
-          <p className="mt-1 text-[15px] text-muted">One tap with Google. The parent signs in; the child learns.</p>
+          <p className="mt-1 text-[15px] text-muted">One tap with Google. Your learner profiles, credits and chats follow you on every device.</p>
 
           <a href={href} className="mt-8 flex w-full items-center justify-center gap-3 rounded-full border border-border bg-panel px-4 py-3.5 text-[15px] font-medium transition hover:border-border-2">
             <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden>
