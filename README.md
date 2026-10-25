@@ -183,3 +183,11 @@ Monthly Dodo plans are granted only by renewals; the hourly billing job grants m
 `MONTHLY_BUDGET_INR` (default 25,000) caps provider spend per calendar month in IST. `src/lib/budget.ts` sums `usage_events`, which now includes narration, images and video at the unit prices in `COST_*` env vars, not just model calls. At 70% of the ceiling free accounts lose fresh generations (library, follow-ups and photos still work); at 105% every fresh generation pauses until the 1st. Paid plans keep going in between because they earn more than they cost. The admin dashboard shows spend, the month-end projection and the current status.
 
 Cost levers already applied: teaching and verification run on Sonnet 5.5 (`TEACHING_MODEL`, `VERIFY_MODEL`), Opus only on the revision pass (`TEACHING_RETRY_MODEL`); free accounts get no narration; the win-back gift is 16 credits once for never-paid accounts and 50 for past payers.
+
+## Notifications and the free tier
+
+Web push (VAPID, `web-push`): `src/lib/push.ts`, subscriptions in `push_subscriptions`, registration via `POST/DELETE /api/push/subscribe`, UI in `PushToggle.tsx` (Account) and a one-line nudge in the chat after the first explanation. Sent on: explanation ready (suppressed when the chat is visible), daily parent report, streak at risk, two-day nudge. Keys in `NEXT_PUBLIC_VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY`. Inside the Android app these arrive as normal Android notifications.
+
+Free tier: 40 credits at sign-up (about five diagrams on the Haiku teaching model, roughly one rupee each), refilled towards 40 every Monday (`credits.free_refill`, max 24 a week, only accounts active in the last 30 days), 30-day expiry, diagram format only, no narration. The monthly budget guard pauses free generation at 70% of the ceiling.
+
+Mobile: no visible scrollbars on phones, safe-area padding under the composer, `viewport-fit=cover`, no tap flash, haptic tick on the check question, `share_target` so text shared from any app lands in the composer.

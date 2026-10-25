@@ -54,6 +54,7 @@ export function SiteFooter() {
           <Link href="/legal/privacy">Privacy</Link>
           <Link href="/legal/terms">Terms</Link>
           <Link href="/legal/refunds">Refunds</Link>
+          <Link href="/delete-account">Delete account</Link>
           <a href="mailto:hello@explaincanvas.com">Contact</a>
         </nav>
       </div>

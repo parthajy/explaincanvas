@@ -22,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/legal/privacy`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${base}/legal/terms`, changeFrequency: "yearly", priority: 0.2 },
     { url: `${base}/legal/refunds`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${base}/delete-account`, changeFrequency: "yearly", priority: 0.2 },
     ...lessons.map((l) => ({ url: `${base}/library/${l.id}`, changeFrequency: "monthly" as const, priority: 0.8 })),
   ];
 }

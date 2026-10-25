@@ -46,7 +46,7 @@ that file to allow full-screen mode; if the fingerprint does not match, the app 
 4. **Store listing.** Copy from `store/listing.md`. Upload `store/icon-512.png` and
    `store/feature-graphic-1024x500.png`, plus 4 to 8 phone screenshots (1080x1920 or similar) taken from the
    installed app: chat, a diagram, a 3D model, the library, the account page.
-5. **Policy forms.** Privacy policy URL `https://explaincanvas.com/legal/privacy`. Data safety: collects email
+5. **Policy forms.** Privacy policy URL `https://explaincanvas.com/legal/privacy`. Account deletion URL `https://explaincanvas.com/delete-account`. Data safety: collects email
    and name for account, user content (questions, photos) for app functionality, not shared, encrypted in
    transit, deletable from Account. Content rating questionnaire: Education, no user-to-user communication.
    Target audience: 13 and over (parents create accounts for younger children). Ads: none.
