@@ -7,14 +7,14 @@ engine, with no browser bar. Everything the site does, the app does. Nothing is 
 
 | Path | What | In git? |
 | --- | --- | --- |
-| `pwabuilder/out-v2/ExplainCanvas.aab` | The app bundle to upload to Google Play (minSdk 24, version 1.0.1, code 2) | no |
-| `pwabuilder/out-v2/ExplainCanvas.apk` | Installable build for testing on a phone (`adb install` or send the file) | no |
+| `pwabuilder/out-v3/ExplainCanvas.aab` | The app bundle to upload to Google Play (minSdk 24, version 1.0.1, code 3) | no |
+| `pwabuilder/out-v3/ExplainCanvas.apk` | Installable build for testing on a phone (`adb install` or send the file) | no |
 | `pwabuilder/out/signing.keystore` + `signing-key-info.txt` | The upload signing key and its passwords. Back these up somewhere safe. Losing them means a new package name and a new listing. | no |
 | `pwabuilder/out/source/` | The Android Studio project, if you ever want to customise the wrapper | no |
 | `pwabuilder/request.json` | The exact PWABuilder request used to generate the package | no (holds the key password) |
 | `store/` | Icon, feature graphic and listing copy for the Play Console | yes |
 
-Package name: `com.explaincanvas.app`. Current upload: version 1.0.1, version code 2, minimum Android 7.0 (API 24), which Play's automatic protection requires. `pwabuilder/out/` holds the first build (API 21) and is superseded.
+Package name: `com.explaincanvas.app`. Current upload: version 1.0.1, version code 3, minimum Android 7.0 (API 24), which Play's automatic protection requires. `pwabuilder/out/` holds the first build (API 21) and is superseded.
 
 The key store and key passwords are the ones in `signing-key-info.txt` (PWABuilder generated them; `request.json` passwords were not used).
 
