@@ -82,6 +82,9 @@ const ServerEnv = z.object({
   COST_TTS_PAISE_PER_1K_CHARS: z.coerce.number().min(0).default(900),
   COST_IMAGE_PAISE: z.coerce.number().min(0).default(30),
   COST_VIDEO_PAISE_PER_SECOND: z.coerce.number().min(0).default(3_000),
+  /** Android wrapper (Trusted Web Activity). Fingerprints: upload key and Play app-signing key, comma-separated. */
+  ANDROID_PACKAGE_NAME: z.string().default("com.explaincanvas.app"),
+  ANDROID_SHA256_FINGERPRINTS: z.string().default("").transform((s) => s.split(",").map((x) => x.trim().toUpperCase()).filter(Boolean)),
   /** Hour of day (IST, 0-23) when the daily parent report goes out. */
   PARENT_REPORT_HOUR_IST: z.coerce.number().int().min(0).max(23).default(20),
 

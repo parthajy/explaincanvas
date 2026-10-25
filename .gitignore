@@ -45,3 +45,6 @@ next-env.d.ts
 
 # local data (uploads when Spaces is not configured, dev magic links)
 .data/
+
+# Android wrapper build output and signing key (never commit)
+android/pwabuilder/

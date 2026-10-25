@@ -10,6 +10,10 @@ export function TopBar({ title, refreshKey, onMenu }: { title?: string; refreshK
   const router = useRouter();
   const [me, setMe] = useState<Me | null>(null);
   const [open, setOpen] = useState(false);
+  const [appMode, setAppMode] = useState(false);
+  useEffect(() => {
+    if (document.cookie.split("; ").some((c) => c === "ec_app=1")) setTimeout(() => setAppMode(true), 0);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -42,7 +46,7 @@ export function TopBar({ title, refreshKey, onMenu }: { title?: string; refreshK
       </div>
       <div className="flex items-center gap-2">
         {me && (
-          <Link href="/pricing" className="hidden h-9 items-center rounded-full border border-border px-3 text-xs text-muted hover:text-text sm:flex" title="Credits">
+          <Link href={appMode ? "/account" : "/pricing"} className="hidden h-9 items-center rounded-full border border-border px-3 text-xs text-muted hover:text-text sm:flex" title="Credits">
             <span className="tabular font-medium text-text">{me.balance}</span>&nbsp;credits · {me.plan.name}
           </Link>
         )}
@@ -57,9 +61,11 @@ export function TopBar({ title, refreshKey, onMenu }: { title?: string; refreshK
               <Link href="/account" className="block px-4 py-2 hover:bg-panel-2" onClick={() => setOpen(false)}>
                 Account and students
               </Link>
-              <Link href="/pricing" className="block px-4 py-2 hover:bg-panel-2" onClick={() => setOpen(false)}>
-                Plans and credits
-              </Link>
+              {!appMode && (
+                <Link href="/pricing" className="block px-4 py-2 hover:bg-panel-2" onClick={() => setOpen(false)}>
+                  Plans and credits
+                </Link>
+              )}
               {me?.isAdmin && (
                 <Link href="/admin" className="block px-4 py-2 hover:bg-panel-2" onClick={() => setOpen(false)}>
                   Admin dashboard

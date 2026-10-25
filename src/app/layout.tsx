@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { THEME_INIT_SCRIPT } from "@/components/ThemeToggle";
 import { Analytics } from "@/components/Analytics";
+import { ServiceWorker } from "@/components/ServiceWorker";
 import { ldJson, organizationLd, websiteLd, SITE } from "@/lib/seo";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full">
         {children}
         <Analytics />
+        <ServiceWorker />
       </body>
     </html>
   );

@@ -19,6 +19,15 @@ export function proxy(request: NextRequest) {
   const isPrivateApi = path.startsWith("/api/") && !PUBLIC_API.some((p) => path === p || path.startsWith(p + "/"));
   const isPrivatePage = PRIVATE_PAGE_PREFIXES.some((p) => path === p || path.startsWith(p));
 
+  // Opened inside the Android wrapper: remember it for a year so purchase UI stays hidden (Play billing rules).
+  if (request.nextUrl.searchParams.get("source") === "app") {
+    const url = request.nextUrl.clone();
+    url.searchParams.delete("source");
+    const res = NextResponse.redirect(url);
+    res.cookies.set("ec_app", "1", { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax", secure: process.env.NODE_ENV === "production" });
+    return res;
+  }
+
   if (!looksSignedIn && isPrivateApi) return NextResponse.json({ error: "unauthenticated" }, { status: 401 });
   if (!looksSignedIn && isPrivatePage) {
     const url = request.nextUrl.clone();

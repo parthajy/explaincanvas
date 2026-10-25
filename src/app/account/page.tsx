@@ -7,6 +7,7 @@ import { settings, students } from "@/lib/repo";
 import { AddStudentForm } from "@/components/AddStudentForm";
 import { ReportToggle } from "@/components/ReportToggle";
 import { levelLabel } from "@/lib/levels";
+import { isAppMode } from "@/lib/appmode";
 import { ManageBillingButton } from "@/components/CheckoutButton";
 import { DangerZone } from "@/components/DangerZone";
 import { Logo } from "@/components/Logo";
@@ -18,6 +19,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const user = await getSessionUser();
   if (!user) redirect("/login?next=/account");
   const { welcome, checkout, status } = await searchParams;
+  const app = await isAppMode();
   const paidJustNow = checkout && status !== "failed" && status !== "cancelled";
   const [{ plan, subscription }, balance, kids, ledger, prefs] = await Promise.all([getPlanForAccount(user.id), creditBalance(user.id), students.listWithStreaks(user.id), recentLedger(user.id), settings.get(user.id)]);
 
@@ -61,10 +63,16 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               </div>
             )}
             <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
-              <Link href="/pricing" className="text-[14px] font-medium underline underline-offset-4">
-                {plan.code === "free" ? "Choose a plan" : "Change plan or top up"}
-              </Link>
-              {subscription?.provider === "dodo" && <ManageBillingButton />}
+              {app ? (
+                <span className="text-[13px] text-muted">Plans and credits are managed at explaincanvas.com in a browser.</span>
+              ) : (
+                <>
+                  <Link href="/pricing" className="text-[14px] font-medium underline underline-offset-4">
+                    {plan.code === "free" ? "Choose a plan" : "Change plan or top up"}
+                  </Link>
+                  {subscription?.provider === "dodo" && <ManageBillingButton />}
+                </>
+              )}
             </div>
           </div>
           <div className="bg-panel p-6">

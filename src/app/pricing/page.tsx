@@ -4,6 +4,7 @@ import { CheckoutButton } from "@/components/CheckoutButton";
 import { SiteHeader, SiteFooter, PageTitle } from "@/components/SiteShell";
 import { pageMetadata, softwareLd, faqLd, breadcrumbLd } from "@/lib/seo";
 import { JsonLdScript, FaqList } from "@/components/Marketing";
+import { isAppMode } from "@/lib/appmode";
 
 export const metadata: Metadata = pageMetadata({ title: "Pricing: plans from ₹599 a month", description: "Credits are the unit. Student ₹599, Pro ₹1,999, Max ₹4,999 a month, Max Annual ₹50,000. Free accounts get the library and one fresh diagram. Prices exclude GST.", path: "/pricing" });
 
@@ -29,11 +30,19 @@ const CREDIT_TABLE: [string, number][] = [
   ["Generated video", 65],
 ];
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const app = await isAppMode();
+  const buy = (item: string, label: string, primary?: boolean) =>
+    app ? <p className="rounded-full border border-border px-4 py-2.5 text-center text-[13px] text-muted">Available on explaincanvas.com</p> : <CheckoutButton item={item} label={label} primary={primary} />;
   return (
     <div className="min-h-dvh bg-bg text-text">
       <JsonLdScript data={[breadcrumbLd([{ name: "Home", path: "/" }, { name: "Pricing", path: "/pricing" }]), softwareLd(Object.values(PLANS).map((p) => ({ name: p.name, pricePaise: p.pricePaise, interval: p.interval }))), faqLd(PRICING_FAQ)]} />
       <SiteHeader />
+      {app && (
+        <div className="mx-auto mt-6 max-w-6xl px-6">
+          <div className="rounded-2xl border border-border bg-panel px-5 py-4 text-[14px] text-muted">Plans and credits are managed on the ExplainCanvas website in a browser. Everything you buy there works here straight away.</div>
+        </div>
+      )}
       <PageTitle eyebrow="Pricing" title="Simple pricing." lede="One credit is about one rupee of work. A diagram is 8, an animation 32, a library lesson 1. Unused plan credits roll over one month. Prices exclude 18% GST, added at checkout. Pay by UPI or card." />
 
       <section className="mx-auto mt-12 max-w-6xl px-6">
@@ -65,7 +74,7 @@ export default function PricingPage() {
                 </ul>
                 <p className="mt-4 text-[12px] text-faint">{p.blurb}</p>
                 <div className="mt-auto pt-7">
-                  <CheckoutButton item={code} label={`Choose ${p.name}`} primary={highlight} />
+                  {buy(code, `Choose ${p.name}`, highlight)}
                 </div>
               </div>
             );
@@ -85,7 +94,7 @@ export default function PricingPage() {
                 <span className="font-medium tabular">{t.credits} credits</span> <span className="text-muted">· {formatInr(Math.round(t.pricePaise / t.credits))} each</span>
               </div>
               <div className="mt-5">
-                <CheckoutButton item={t.code} label="Add credits" />
+                {buy(t.code, "Add credits")}
               </div>
             </div>
           ))}
