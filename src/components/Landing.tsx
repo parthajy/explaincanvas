@@ -3,6 +3,7 @@ import { LogoMark } from "@/components/Logo";
 import { PLANS, formatInr } from "@/lib/billing/plans";
 import { Reveal, TypingLine, TimeBars } from "@/components/Motion";
 import { LineShow } from "@/components/LineShow";
+import { VideoCard } from "@/components/VideoCard";
 
 /**
  * Landing: black and white, large type, quiet greys. Dark hero and footer, white middle.
@@ -135,6 +136,8 @@ export function Landing() {
           </Reveal>
         </div>
       </section>
+
+      <VideoCard videoId="XInjUx-LKmY" title="See ExplainCanvas in two minutes" dark={dark} />
 
       {/* Concept marquee */}
       <div className="mt-20 overflow-hidden border-y py-4" style={{ borderColor: dark.line }}>
