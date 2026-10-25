@@ -88,7 +88,7 @@ export function FaqList({ items }: { items: { q: string; a: string }[] }) {
   );
 }
 
-export function CtaBand({ title = "Stuck on a chapter? Ask it now.", body = "Five explanations a week are free. The library is free forever.", label = "Start free", href = "/login" }: { title?: string; body?: string; label?: string; href?: string }) {
+export function CtaBand({ title = "Stuck on a chapter? Ask it now.", body = "Free explanations every day. The library is free forever.", label = "Start free", href = "/login" }: { title?: string; body?: string; label?: string; href?: string }) {
   return (
     <div className="flex flex-col items-start justify-between gap-6 rounded-3xl bg-primary p-8 text-on-primary md:flex-row md:items-center md:p-12">
       <div>

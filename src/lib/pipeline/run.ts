@@ -40,7 +40,7 @@ export class PipelineError extends Error {
 
 const FRIENDLY: Record<string, string> = {
   insufficient_credits: "You're out of credits for this. Add a top-up or upgrade your plan and send it again.",
-  insufficient_credits_free: "Your free credits for this week are used up. They refill every Monday, and the library is open meanwhile. Choose a plan for more, any time.",
+  insufficient_credits_free: "You have used today's free explanations. Come back tomorrow for more. The library is open meanwhile, and follow-up questions still work.",
   budget_free_paused: "Free explanations are paused for the rest of this month while we keep costs in check. The library is open, and plans are not affected.",
   budget_paused: "New explanations are paused for the rest of this month. The library is open, follow-ups still work, and nothing was charged.",
   verification_failed: "I couldn't produce an explanation I'm confident is correct. Try rephrasing, or ask about a smaller part of the topic.",

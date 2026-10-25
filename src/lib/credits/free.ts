@@ -4,13 +4,13 @@ import { FREE_TIER } from "@/lib/billing/plans";
 import { logger } from "@/lib/logger";
 
 /**
- * Weekly refill for free accounts: top the free bucket back up towards FREE_TIER.weeklyRefillTo, never more
- * than weeklyRefillMax in one week, only for accounts that were active in the last 30 days (so dormant
- * sign-ups cost nothing). Keyed by ISO week, so the hourly job can run any number of times.
+ * Daily refill for free accounts: top the free bucket back up towards FREE_TIER.refillTo, never more than
+ * dailyRefill in one day, only for accounts that were active in the last 30 days (so dormant sign-ups cost
+ * nothing). Keyed by IST date, so the hourly job can run any number of times. "Come back tomorrow" is literally true.
  * Free diagrams are made on the cheap model, about one rupee each, and the monthly budget guard sits above this.
  */
 export async function refillFreeCredits(): Promise<number> {
-  const week = isoWeek(new Date());
+  const week = istDate(new Date());
   const rows = await q<{ account_id: string; free_remaining: string }>(
     `select u.id account_id,
             coalesce((select sum(greatest(remaining, 0)) from credit_grants_v g where g.account_id = u.id and g.bucket = 'free' and (g.expires_at is null or g.expires_at > now())), 0)::text free_remaining
@@ -22,7 +22,7 @@ export async function refillFreeCredits(): Promise<number> {
   );
   let n = 0;
   for (const r of rows) {
-    const amount = Math.min(FREE_TIER.weeklyRefillMax, FREE_TIER.weeklyRefillTo - Number(r.free_remaining));
+    const amount = Math.min(FREE_TIER.dailyRefill, FREE_TIER.refillTo - Number(r.free_remaining));
     if (amount <= 0) continue;
     try {
       await grantCredits({
@@ -33,7 +33,7 @@ export async function refillFreeCredits(): Promise<number> {
         refId: week,
         key: `free-refill:${r.account_id}:${week}`,
         expiresAt: new Date(Date.now() + FREE_TIER.creditDays * 86_400_000),
-        note: "weekly free credits",
+        note: "daily free credits",
       });
       n++;
     } catch (err) {
@@ -42,6 +42,11 @@ export async function refillFreeCredits(): Promise<number> {
   }
   if (n) logger.info({ n, week }, "free credits refilled");
   return n;
+}
+
+/** "2026-10-25": the calendar date in IST. */
+export function istDate(d: Date): string {
+  return new Date(d.getTime() + 5.5 * 3600_000).toISOString().slice(0, 10);
 }
 
 /** "2026-W43": Monday-based ISO week, in IST. */

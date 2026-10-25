@@ -188,6 +188,6 @@ Cost levers already applied: teaching and verification run on Sonnet 5.5 (`TEACH
 
 Web push (VAPID, `web-push`): `src/lib/push.ts`, subscriptions in `push_subscriptions`, registration via `POST/DELETE /api/push/subscribe`, UI in `PushToggle.tsx` (Account) and a one-line nudge in the chat after the first explanation. Sent on: explanation ready (suppressed when the chat is visible), daily parent report, streak at risk, two-day nudge. Keys in `NEXT_PUBLIC_VAPID_PUBLIC_KEY` / `VAPID_PRIVATE_KEY`. Inside the Android app these arrive as normal Android notifications.
 
-Free tier: 40 credits at sign-up (about five diagrams on the Haiku teaching model, roughly one rupee each), refilled towards 40 every Monday (`credits.free_refill`, max 24 a week, only accounts active in the last 30 days), 30-day expiry, diagram format only, no narration. The monthly budget guard pauses free generation at 70% of the ceiling.
+Free tier: 40 credits at sign-up (about five diagrams on the Haiku teaching model, roughly one rupee each), refilled by 16 a day towards 40 (`credits.free_refill`, only accounts active in the last 30 days), 30-day expiry, diagram format only, no narration. The monthly budget guard pauses free generation at 70% of the ceiling.
 
 Mobile: no visible scrollbars on phones, safe-area padding under the composer, `viewport-fit=cover`, no tap flash, haptic tick on the check question, `share_target` so text shared from any app lands in the composer.

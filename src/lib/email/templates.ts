@@ -42,7 +42,7 @@ export function welcome(i: { appUrl: string; name?: string | null; unsubscribeUr
       <li><strong>Photograph the textbook.</strong> Tap the camera in the box and point it at the question.</li>
       <li><strong>Set the level</strong> in Account, yours or your child's, from Class 6 to PhD, so every explanation is pitched right.</li>
     </ol>` +
-    p("You get about five free explanations a week, and the library of validated explanations is open to everyone.");
+    p("You get free explanations every day, and the library of validated explanations is open to everyone.");
   return {
     subject: "Welcome to ExplainCanvas. Here is how to get the most from it",
     html: layout({ appUrl: i.appUrl, eyebrow: "Welcome", heading: "Understanding, drawn out", body, cta: { label: "Ask your first question", href: `${i.appUrl}/` }, footer: "Reply to this email any time. A person reads it.", unsubscribeUrl: i.unsubscribeUrl }),

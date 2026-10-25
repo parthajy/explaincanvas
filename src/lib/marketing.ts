@@ -26,7 +26,7 @@ const COMMON_FAQ = (cls: number, subject: string): { q: string; a: string }[] =>
   },
   {
     q: "Is it free?",
-    a: "The library of validated explanations is free to read, and every account gets about five fresh explanations a week free. After that, plans start at ₹599 a month for about 250 credits. A diagram costs 8 credits, an animation 32, a library lesson 1.",
+    a: "The library of validated explanations is free to read, and every account gets free explanations every day. After that, plans start at ₹599 a month for about 250 credits. A diagram costs 8 credits, an animation 32, a library lesson 1.",
   },
   {
     q: "Can my child photograph the homework page?",
@@ -237,7 +237,7 @@ export const GENERAL_FAQ: { q: string; a: string }[] = [
   },
   {
     q: "How much does ExplainCanvas cost?",
-    a: "The library is free and every account gets about five fresh explanations a week free. Paid plans are Student at ₹599 a month (250 credits), Pro at ₹1,999 a month (900 credits), Max at ₹4,999 a month (2,500 credits) and Max Annual at ₹50,000 a year. Prices exclude 18% GST, which is added at checkout. Credit packs are available to subscribers.",
+    a: "The library is free and every account gets free explanations every day. Paid plans are Student at ₹599 a month (250 credits), Pro at ₹1,999 a month (900 credits), Max at ₹4,999 a month (2,500 credits) and Max Annual at ₹50,000 a year. Prices exclude 18% GST, which is added at checkout. Credit packs are available to subscribers.",
   },
   {
     q: "What is a credit?",

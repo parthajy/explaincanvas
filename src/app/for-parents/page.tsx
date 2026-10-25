@@ -98,7 +98,7 @@ export default function ForParentsPage() {
       </section>
 
       <section className="mx-auto mt-20 max-w-6xl px-6">
-        <CtaBand title="Start with five free explanations." body="Set the level, ask one real doubt, and see what the report looks like tonight." />
+        <CtaBand title="Start with today's free explanations." body="Set the level, ask one real doubt, and see what the report looks like tonight." />
       </section>
       <SiteFooter />
     </div>

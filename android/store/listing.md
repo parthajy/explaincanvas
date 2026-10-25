@@ -29,7 +29,7 @@ Honest about accuracy
 Every fresh explanation passes a second, independent check before it is shown. Anything that fails is rewritten. If you spot a mistake, report it with one tap and it is pulled until a person has reviewed it.
 
 Free to start
-The library is free to read and every account includes about five fresh explanations a week. Plans and credits are managed on explaincanvas.com.
+The library is free to read and every account includes free explanations every day. Plans and credits are managed on explaincanvas.com.
 
 ExplainCanvas is made in India, in English and Hinglish.
 
