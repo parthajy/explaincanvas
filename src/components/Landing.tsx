@@ -90,7 +90,7 @@ export function Landing() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link href="/login" className="rounded-full px-6 py-3 text-[15px] font-medium" style={{ background: dark.text, color: dark.bg }}>
-                Start free. First diagram on us
+                Start free. Five explanations on us
               </Link>
               <Link href="/library" className="rounded-full border px-6 py-3 text-[15px] font-medium hover:bg-white/5" style={{ borderColor: dark.line }}>
                 Browse free lessons
@@ -265,7 +265,7 @@ export function Landing() {
           })}
         </div>
         <p className="mt-4 text-[12px]" style={{ color: dark.faint }}>
-          Prices exclude 18% GST, added at checkout. Pay by UPI or card. Free accounts get unlimited library lessons and one fresh diagram.
+          Prices exclude 18% GST, added at checkout. Pay by UPI or card. Free accounts get unlimited library lessons and about five fresh explanations a week.
         </p>
       </section>
 

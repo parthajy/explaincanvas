@@ -6,7 +6,7 @@ import { pageMetadata, softwareLd, faqLd, breadcrumbLd } from "@/lib/seo";
 import { JsonLdScript, FaqList } from "@/components/Marketing";
 import { isAppMode } from "@/lib/appmode";
 
-export const metadata: Metadata = pageMetadata({ title: "Pricing: plans from ₹599 a month", description: "Credits are the unit. Student ₹599, Pro ₹1,999, Max ₹4,999 a month, Max Annual ₹50,000. Free accounts get the library and one fresh diagram. Prices exclude GST.", path: "/pricing" });
+export const metadata: Metadata = pageMetadata({ title: "Pricing: plans from ₹599 a month", description: "Credits are the unit. Student ₹599, Pro ₹1,999, Max ₹4,999 a month, Max Annual ₹50,000. Free accounts get the library and about five fresh explanations a week. Prices exclude GST.", path: "/pricing" });
 
 const PRICING_FAQ = [
   { q: "What is a credit worth?", a: "About one rupee of generation work. A diagram is 8 credits, an annotated photo 10, a 3D model 20, slides 24, a step-by-step solution 26, an animation 32. Library lessons cost 1 credit and follow-up questions 2." },
@@ -111,7 +111,7 @@ export default async function PricingPage() {
             </div>
           ))}
         </div>
-        <p className="mt-3 text-[12px] text-faint">Free accounts get unlimited library lessons, one fresh diagram, and one streak credit a day for every day with a passed check.</p>
+        <p className="mt-3 text-[12px] text-faint">Free accounts get unlimited library lessons and about five fresh explanations a week, refilled every Monday.</p>
       </section>
 
       <section className="mx-auto mt-20 max-w-6xl px-6">

@@ -20,6 +20,7 @@ async function main() {
     await enqueue({ kind: "sessions.purge", payload: {}, key: `sessions.purge:${hour}` });
     await enqueue({ kind: "uploads.purge", payload: {}, key: `uploads.purge:${hour.slice(0, 10)}` });
     await enqueue({ kind: "lifecycle.sweep", payload: {}, key: `lifecycle.sweep:${hour}` });
+    await enqueue({ kind: "credits.free_refill", payload: {}, key: `credits.free_refill:${hour}` });
     for (const row of await library.readyToPublish()) {
       await enqueue({ kind: "lesson.promote", payload: { lessonId: row.id }, key: `lesson.promote:${row.id}` });
     }

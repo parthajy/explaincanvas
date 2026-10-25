@@ -8,7 +8,7 @@ import { logger } from "@/lib/logger";
  * dead-letter after max_attempts. Workers heartbeat; a reaper requeues jobs whose worker died.
  */
 
-export const JobKind = z.enum(["explanation.generate", "lesson.promote", "parent.report", "credits.expire", "billing.cycle", "sessions.purge", "uploads.purge", "render.heavy", "email.send", "lifecycle.sweep"]);
+export const JobKind = z.enum(["explanation.generate", "lesson.promote", "parent.report", "credits.expire", "billing.cycle", "sessions.purge", "uploads.purge", "render.heavy", "email.send", "lifecycle.sweep", "credits.free_refill"]);
 export type JobKind = z.infer<typeof JobKind>;
 
 export interface JobRow {

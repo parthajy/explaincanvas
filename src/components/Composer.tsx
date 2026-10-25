@@ -220,8 +220,11 @@ export function Composer({
               }
             }}
             placeholder={recording ? "Listening..." : transcribing ? "Writing that down..." : compact ? "Ask a follow-up or a new question" : "Ask anything you are stuck on"}
-            className="max-h-[220px] min-h-[40px] w-full resize-none bg-transparent py-2 text-[16px] leading-6 outline-none placeholder:text-faint"
+            className="no-scrollbar max-h-[160px] min-h-[40px] w-full resize-none overflow-y-auto bg-transparent py-2 text-[16px] leading-6 outline-none placeholder:text-faint md:max-h-[220px]"
             disabled={disabled}
+            enterKeyHint="send"
+            autoCapitalize="sentences"
+            autoCorrect="on"
           />
           <button
             type="button"

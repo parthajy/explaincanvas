@@ -9,6 +9,7 @@ import { ReportToggle } from "@/components/ReportToggle";
 import { levelLabel } from "@/lib/levels";
 import { isAppMode } from "@/lib/appmode";
 import { ManageBillingButton } from "@/components/CheckoutButton";
+import { PushToggle } from "@/components/PushToggle";
 import { DangerZone } from "@/components/DangerZone";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -110,8 +111,9 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
         </section>
 
         <section className="mt-10">
-          <h2 className="text-[18px] font-semibold tracking-tight">Email</h2>
+          <h2 className="text-[18px] font-semibold tracking-tight">Email and notifications</h2>
           <div className="mt-3 space-y-3">
+            <PushToggle />
             <ReportToggle on={prefs?.parent_report_email !== false} email={user.email} />
             <ReportToggle on={prefs?.marketing_email !== false} email={user.email} field="marketingEmail" title="Tips and offers" description="Occasional emails on getting more from ExplainCanvas, and free credits when we have them. Never more than one a few days." />
           </div>

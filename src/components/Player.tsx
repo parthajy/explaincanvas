@@ -285,7 +285,13 @@ export function Player({
     setBusy(true);
     try {
       const res = await fetch(`/api/explanations/${explanationId}/check`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ answerIndex: i }) });
-      if (res.ok) setResult(await res.json());
+      if (res.ok) {
+        const r = await res.json();
+        setResult(r);
+        try {
+          navigator.vibrate?.(r.passed ? 30 : [40, 60, 40]);
+        } catch {}
+      }
     } finally {
       setBusy(false);
     }

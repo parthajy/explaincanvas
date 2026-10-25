@@ -10,6 +10,7 @@ import { readPage, textIsThin, pickNamed } from "@/lib/ai/pagereader";
 import { parseNcertRef, chapterIndexText, findChapter } from "@/lib/ncert";
 import { recordSafetyEvent, SAFE_REPLY } from "@/lib/safety";
 import { budgetState } from "@/lib/budget";
+import { pushToAccount } from "@/lib/push";
 import { RefusalError, ModelOutputError, type ModelUsage } from "@/lib/ai/client";
 import { Format, SceneDoc, parseSceneDoc, type SceneDoc as SceneDocT } from "@/lib/scene/schema";
 import { CREDIT_COST, allowedBucketsFor, FREE_TIER } from "@/lib/billing/plans";
@@ -39,7 +40,7 @@ export class PipelineError extends Error {
 
 const FRIENDLY: Record<string, string> = {
   insufficient_credits: "You're out of credits for this. Add a top-up or upgrade your plan and send it again.",
-  insufficient_credits_free: "The free plan includes one fresh diagram, and it has been used. Choose a plan to keep asking, or browse the free library.",
+  insufficient_credits_free: "Your free credits for this week are used up. They refill every Monday, and the library is open meanwhile. Choose a plan for more, any time.",
   budget_free_paused: "Free explanations are paused for the rest of this month while we keep costs in check. The library is open, and plans are not affected.",
   budget_paused: "New explanations are paused for the rest of this month. The library is open, follow-ups still work, and nothing was charged.",
   verification_failed: "I couldn't produce an explanation I'm confident is correct. Try rephrasing, or ask about a smaller part of the topic.",
@@ -303,6 +304,7 @@ export async function runExplanation(explanationId: string, opts: { isLastAttemp
     reserved = null;
     await setStatus("ready", { source: "generated", scene: finalDoc, scene_version: finalDoc.version, credits_charged: quoted, cost_paise: costPaise(), model_usage: usages });
     await recordUsage();
+    void pushToAccount(ex.account_id, { title: "Your explanation is ready", body: finalDoc.title, url: `/c/${ex.chat_id}`, tag: "ready" }).catch(() => undefined);
 
     // Candidate for the library. Auto-validated when the reviewer found nothing; otherwise waits for review.
     // Never fatal: the student already has their explanation.

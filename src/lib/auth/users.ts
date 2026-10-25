@@ -1,5 +1,6 @@
 import { q, maybe, tx } from "@/lib/db";
 import { grantCredits } from "@/lib/credits/ledger";
+import { FREE_TIER } from "@/lib/billing/plans";
 import { logger } from "@/lib/logger";
 import { enqueue } from "@/lib/queue/jobs";
 
@@ -40,7 +41,7 @@ export async function findOrCreateUser(input: { email: string; name?: string | n
     return { id: created.id, email: created.email, isNew: true };
   });
   if (result.isNew) {
-    await grantCredits({ accountId: result.id, amount: 8, bucket: "free", refType: "signup", refId: result.id, key: `free-signup:${result.id}`, note: "one free diagram" }).catch((err) =>
+    await grantCredits({ accountId: result.id, amount: FREE_TIER.signupCredits, bucket: "free", refType: "signup", refId: result.id, key: `free-signup:${result.id}`, expiresAt: new Date(Date.now() + FREE_TIER.creditDays * 86_400_000), note: "free credits" }).catch((err) =>
       logger.error({ err, userId: result.id }, "free grant failed"),
     );
     // Welcome email, a minute after sign-up so the first screen is never slowed by mail.

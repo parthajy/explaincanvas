@@ -26,7 +26,13 @@ export const metadata: Metadata = {
   verification: { other: { "msvalidate.01": "E338B8251BF4C0179E7227136C2334CA" } },
 };
 
-export const viewport = { themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#09090b" }] };
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover" as const,
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#ffffff" }, { media: "(prefers-color-scheme: dark)", color: "#09090b" }],
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

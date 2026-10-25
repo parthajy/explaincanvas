@@ -42,7 +42,7 @@ export const PLANS: Record<PlanCode, Plan> = {
     premiumNarration: false,
     fastVideo: false,
     topupsAllowed: false,
-    blurb: "Unlimited library lessons, one fresh diagram, a streak credit a day.",
+    blurb: "Unlimited library lessons, about five fresh diagrams a week, a streak credit a day.",
   },
   student: {
     code: "student",
@@ -139,8 +139,11 @@ export const CREDIT_COST: Record<Format | "library" | "followup", number> = {
 };
 
 export const FREE_TIER = {
-  /** One fresh generation per verified account, diagram renderer only. */
-  freshGenerations: 1,
+  /** Free accounts start with 40 credits (five diagrams) and refill towards 40 every week, diagram renderer only, on the cheap teaching model. */
+  signupCredits: 40,
+  weeklyRefillTo: 40,
+  weeklyRefillMax: 24,
+  creditDays: 30,
   freshGenerationFormat: "diagram" as Format,
   /** Streak credit granted per day with a passed check; spendable on library and follow-ups only. */
   streakCreditPerDay: 1,

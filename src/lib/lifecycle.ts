@@ -7,6 +7,7 @@ import { sendEmail } from "@/lib/auth/mail";
 import { grantCredits } from "@/lib/credits/ledger";
 import { enqueue } from "@/lib/queue/jobs";
 import * as T from "@/lib/email/templates";
+import { pushToAccount } from "@/lib/push";
 import { findChapter, chapterSlug, chaptersFor } from "@/lib/ncert";
 import { landerFor, chapterQuestions } from "@/lib/marketing";
 
@@ -119,6 +120,7 @@ export async function sendLifecycleEmail(job: EmailJob): Promise<unknown> {
     const pool = ch && lander ? chapterQuestions(lander, ch) : lander ? chaptersFor(s.class_level, lander.subject.toLowerCase()).flatMap((c) => chapterQuestions(lander, c).slice(0, 1)) : [];
     const pick = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
     const suggestion = pick ? { title: pick, url: `${appUrl}/login?next=${encodeURIComponent(`/?q=${encodeURIComponent(pick)}`)}` } : null;
+    void pushToAccount(a.id, { title: `${s.name}: one question tonight?`, body: pick ?? "Anything from today's homework will do.", url: "/", tag: "nudge" }).catch(() => undefined);
     return deliver(a.id, key, a.email, T.nudge({ appUrl, studentName: s.name, quietDays: Math.max(2, s.quiet_days ?? 2), suggestion, weakChapter: ch ? `Chapter ${ch.n}, ${ch.name}` : null }));
   }
 
@@ -131,6 +133,7 @@ export async function sendLifecycleEmail(job: EmailJob): Promise<unknown> {
     const a = await account(s.account_id);
     if (!a || !a.parent_report_email) return { skipped: "reports off" };
     if (!(await claimLog(a.id, "streak", key))) return { skipped: "already sent" };
+    void pushToAccount(a.id, { title: `${s.name}'s ${s.current_days}-day streak ends tonight`, body: "One question keeps it alive.", url: "/", tag: "streak" }).catch(() => undefined);
     return deliver(a.id, key, a.email, T.streakAtRisk({ appUrl, studentName: s.name, days: s.current_days }));
   }
 

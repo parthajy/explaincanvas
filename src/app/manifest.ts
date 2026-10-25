@@ -14,6 +14,7 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: "portrait",
     lang: "en-IN",
     categories: ["education"],
+    share_target: { action: "/", method: "GET", params: { text: "q" } },
     shortcuts: [
       { name: "Ask a question", short_name: "Ask", url: "/", icons: [{ src: "/logo-192.png", sizes: "192x192", type: "image/png" }] },
       { name: "Library", short_name: "Library", url: "/library", icons: [{ src: "/logo-192.png", sizes: "192x192", type: "image/png" }] },

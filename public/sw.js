@@ -3,7 +3,7 @@
  * and caches the shell assets so the app opens instantly. Explanations themselves are never cached here:
  * they stream from the server and must stay fresh.
  */
-const VERSION = "ec-v3";
+const VERSION = "ec-v4";
 const SHELL = ["/offline", "/logo-192.png", "/logo.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
@@ -38,7 +38,13 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener("push", (event) => {
   let data = {};
   try { data = event.data ? event.data.json() : {}; } catch { data = { title: "ExplainCanvas", body: event.data ? event.data.text() : "" }; }
-  event.waitUntil(self.registration.showNotification(data.title || "ExplainCanvas", { body: data.body || "", icon: "/logo-192.png", badge: "/logo-192.png", data: { url: data.url || "/" } }));
+  event.waitUntil((async () => {
+    if (data.tag === "ready") {
+      const wins = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+      if (wins.some((w) => w.visibilityState === "visible")) return; // they are watching it arrive
+    }
+    await self.registration.showNotification(data.title || "ExplainCanvas", { body: data.body || "", icon: "/logo-192.png", badge: "/logo-192.png", tag: data.tag || undefined, renotify: false, data: { url: data.url || "/" } });
+  })());
 });
 
 self.addEventListener("notificationclick", (event) => {

@@ -95,6 +95,7 @@ html[data-theme="dark"] {
 html,
 body {
   height: 100%;
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -124,6 +125,28 @@ body {
 /* Diagrams are authored on white; keep them readable in dark mode. */
 .scene-svg {
   background: #fff;
+}
+
+/* Phones: no visible scrollbars, no rubber-band over the chat, no grey tap flash, safe-area aware. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+@media (max-width: 767px) {
+  .scrollbar-thin {
+    scrollbar-width: none;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    display: none;
+  }
+}
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .scrollbar-thin::-webkit-scrollbar {

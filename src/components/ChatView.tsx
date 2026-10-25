@@ -10,6 +10,7 @@ import { TopBar } from "@/components/TopBar";
 import { LogoMark } from "@/components/Logo";
 import { type ExplanationRow, type MessageRow, type Me } from "@/lib/chat/types";
 import { GenerationFeed } from "@/components/GenerationFeed";
+import { PushNudge } from "@/components/PushToggle";
 
 const SUGGESTIONS: Record<string, string[]> = {
   default: ["Why don't action and reaction forces cancel out?", "How does a plant make its food?", "Show me the parts of the heart in 3D", "How do the Moon's phases change over a month?"],
@@ -277,7 +278,7 @@ export function ChatView({ chatId }: { chatId: string | null }) {
           </div>
         ) : (
           <>
-            <div ref={scrollerRef} className="scrollbar-thin flex-1 overflow-y-auto px-4 pb-40 pt-2 md:px-8">
+            <div ref={scrollerRef} className="scrollbar-thin flex-1 overflow-y-auto overscroll-contain px-4 pb-40 pt-2 md:px-8">
               <div className="mx-auto flex max-w-[760px] flex-col gap-7">
                 {messages.map((m) => {
                   if (m.role === "user") {
@@ -318,6 +319,7 @@ export function ChatView({ chatId }: { chatId: string | null }) {
                         {ex?.status === "ready" && ex.scene && (
                           <Player explanationId={ex.id} doc={ex.scene} uploadUrl={uploadUrl} onAsk={(t) => send(t, [])} onSimpler={() => send("Explain it again in simpler words, with an everyday example.", [], { explanationId: ex.id, reason: "Simpler words please" })} onHinglish={() => send("Explain this again in Hinglish.", [], { explanationId: ex.id, reason: "Explain in Hinglish" }, "hinglish")} onReexplain={(reason) => send(`I didn't get it: ${reason.toLowerCase()}. Please explain it differently.`, [], { explanationId: ex.id, reason })} />
                         )}
+                        {ex?.status === "ready" && ex.source !== "followup" && <PushNudge />}
                         {ex?.status === "ready" && (
                           <div className="mt-3 text-xs text-faint">
                             {ex.source === "library" ? "From the library · 1 credit" : ex.source === "generated" ? `Made for you · ${ex.credits_charged ?? ex.credits_quoted} credits · checked for accuracy` : ex.credits_charged ? `${ex.credits_charged} credits` : ""}
@@ -335,7 +337,7 @@ export function ChatView({ chatId }: { chatId: string | null }) {
                 <div ref={bottomRef} />
               </div>
             </div>
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-bg via-bg/95 to-transparent px-4 pb-4 pt-10 md:px-8">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-bg via-bg/95 to-transparent px-4 pb-safe pt-10 md:px-8 md:pb-4">
               <div className="pointer-events-auto mx-auto max-w-[760px]">
                 <Composer compact disabled={pending || sending} onSend={(t, a) => send(t, a)} language={language} onLanguageChange={changeLanguage} />
                 {error && <p className="mt-2 text-center text-sm text-danger">{error}</p>}

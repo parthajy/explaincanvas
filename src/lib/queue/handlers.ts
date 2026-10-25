@@ -2,6 +2,8 @@ import { z } from "zod";
 import { type JobHandler, type JobKind, NonRetryableError, claimOne, complete, fail, getJob } from "@/lib/queue/jobs";
 import { EmailJob, lifecycleSweep, sendLifecycleEmail } from "@/lib/lifecycle";
 import { findChapter } from "@/lib/ncert";
+import { pushToAccount } from "@/lib/push";
+import { refillFreeCredits } from "@/lib/credits/free";
 import { runExplanation } from "@/lib/pipeline/run";
 import { expireDueCredits } from "@/lib/credits/ledger";
 import { runBillingCycle } from "@/lib/billing/fulfil";
@@ -48,6 +50,7 @@ export const handlers: Partial<Record<JobKind, JobHandler>> = {
     return sendLifecycleEmail(parsed.data);
   },
   "lifecycle.sweep": async () => lifecycleSweep(),
+  "credits.free_refill": async () => ({ refilled: await refillFreeCredits() }),
   "parent.report": async (job) => {
     // Builds the day's report and emails it to the parent through Resend.
     const { studentId, date } = z.object({ studentId: z.string().uuid(), date: z.string() }).parse(job.payload);
@@ -83,6 +86,7 @@ ${struggled.length ? `<p style="margin:0 0 4px"><strong>Still working on</strong
 <p style="margin:16px 0 0;font-size:14px">Understood means ${student.name} answered the check question correctly after the explanation.</p>
 <p style="margin:16px 0 0;font-size:13px;color:#6b7280">Turn this report off any time from <a href="${appUrl}/account" style="color:#4f6bff">your account</a>.</p>
 </div>`;
+    void pushToAccount(student.account_id, { title: `${student.name} studied today`, body: `${understood.length} understood${struggled.length ? `, ${struggled.length} to revisit` : ""}`, url: "/account", tag: "report" }).catch(() => undefined);
     try {
       const { sent } = await sendEmail({ to: owner.email, subject: `${student.name} studied today: ${understood.length} understood${struggled.length ? `, ${struggled.length} to revisit` : ""}`, html, text });
       if (sent) await parentReports.markSent(studentId, date);
